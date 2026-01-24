@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAY MESSAGE</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+
+body{
+min-height:100vh;
+background:radial-gradient(circle at top,#1b1f3b,#05050a);
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center
+}
+
+.card{
+width:94%;
+max-width:480px;
+padding:28px;
+border-radius:26px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(22px);
+box-shadow:0 30px 70px rgba(0,0,0,.6)
+}
+
+.logo{text-align:center;font-size:32px;font-weight:800}
+.subtitle{text-align:center;font-size:14px;opacity:.6;margin-top:6px}
+
+button,input,textarea{
+width:100%;
+padding:14px;
+margin-top:14px;
+border-radius:16px;
+border:none;
+background:rgba(255,255,255,.12);
+color:white
+}
+
+button{
+background:linear-gradient(135deg,#6c63ff,#8f88ff);
+cursor:pointer
+}
+
+.secondary{background:rgba(255,255,255,.15)}
+.admin{text-align:center;margin-top:16px;font-size:13px;opacity:.6;cursor:pointer}
+
+.panel{display:none}
+
+.news,.file{
+margin-top:12px;
+padding:12px;
+border-radius:14px;
+background:rgba(255,255,255,.1);
+font-size:14px
+}
+
+.exit{background:#ff4d4d}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="main">
+<div class="logo">VAY MESSAGE</div>
+<div class="subtitle">Будущее общения</div>
+<button>Скачать</button>
+<button class="secondary">Что нового</button>
+<div class="admin" onclick="openAdmin()">Вход администратора</div>
+</div>
+
+<div class="card panel" id="login">
+<div class="logo">Админ вход</div>
+<input type="password" id="pass" placeholder="Пароль">
+<button onclick="login()">Войти</button>
+</div>
+
+<div class="card panel" id="admin">
+<div class="logo">VAY ADMIN</div>
+
+<input id="title" placeholder="Заголовок новости">
+<textarea id="text" placeholder="Текст"></textarea>
+<button onclick="addNews()">Опубликовать новость</button>
+
+<input type="file" id="fileInput">
+<button onclick="addFile()">Добавить файл</button>
+
+<div id="newsList"></div>
+<div id="fileList"></div>
+
+<button class="exit" onclick="logout()">Выйти</button>
+</div>
+
+<script>
+const PASS="admin123"
+
+function openAdmin(){
+main.style.display="none"
+login.style.display="block"
+}
+
+function login(){
+if(pass.value===PASS){
+login.style.display="none"
+admin.style.display="block"
+loadAll()
+}else alert("Неверный пароль")
+}
+
+function logout(){
+admin.style.display="none"
+main.style.display="block"
+}
+
+function addNews(){
+const n=JSON.parse(localStorage.news||"[]")
+n.unshift({t:title.value,c:text.value})
+localStorage.news=JSON.stringify(n)
+title.value=text.value=""
+loadAll()
+}
+
+function addFile(){
+const f=fileInput.files[0]
+if(!f)return
+const files=JSON.parse(localStorage.files||"[]")
+files.unshift({name:f.name,size:f.size})
+localStorage.files=JSON.stringify(files)
+fileInput.value=""
+loadAll()
+}
+
+function loadAll(){
+newsList.innerHTML=""
+fileList.innerHTML=""
+JSON.parse(localStorage.news||"[]").forEach(n=>{
+newsList.innerHTML+=`<div class="news"><b>${n.t}</b><br>${n.c}</div>`
+})
+JSON.parse(localStorage.files||"[]").forEach(f=>{
+fileList.innerHTML+=`<div class="file">📦 ${f.name} (${Math.round(f.size/1024)} KB)</div>`
+})
+}
+</script>
+
+</body>
+</html>
