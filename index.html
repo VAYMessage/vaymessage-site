@@ -2,15 +2,22 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaymessage — Умный мессенджер будущего</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        /* Сброс стилей и базовые настройки */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            /* Цветовая система Vaymessage */
+            /* Цветовая система */
             --primary: #5E5CE6;
             --primary-dark: #4846C2;
             --secondary: #32D74B;
@@ -24,19 +31,12 @@
             --gradient-primary: linear-gradient(135deg, #5E5CE6, #0A84FF);
             --gradient-secondary: linear-gradient(135deg, #32D74B, #64D2FF);
             --gradient-accent: linear-gradient(135deg, #FF375F, #FF9F0A);
-            --gradient-system: linear-gradient(135deg, #5E5CE6, #BF5AF2);
-            
-            /* Адаптивные переменные */
-            --base-font-size: 16px;
-            --scale-factor: 1;
-            --screen-width: 100vw;
-            --screen-height: 100vh;
             
             /* Фоны */
             --bg-primary: #000000;
             --bg-secondary: #0A0A0A;
-            --bg-card: rgba(255, 255, 255, 0.05);
             --bg-glass: rgba(255, 255, 255, 0.08);
+            --bg-glass-dark: rgba(0, 0, 0, 0.8);
             
             /* Текст */
             --text-primary: #FFFFFF;
@@ -44,98 +44,30 @@
             --text-tertiary: rgba(255, 255, 255, 0.5);
             
             /* Эффекты */
-            --glass-blur: 30px;
+            --glass-blur: 20px;
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            --neon-glow: 0 0 30px rgba(94, 92, 230, 0.3);
             
             /* Анимации */
-            --transition-smooth: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* Адаптация под размер устройства */
-        @media (max-width: 320px) {
-            :root {
-                --base-font-size: 14px;
-                --scale-factor: 0.85;
-            }
-        }
-        
-        @media (min-width: 321px) and (max-width: 480px) {
-            :root {
-                --base-font-size: 15px;
-                --scale-factor: 0.9;
-            }
-        }
-        
-        @media (min-width: 481px) and (max-width: 768px) {
-            :root {
-                --base-font-size: 16px;
-                --scale-factor: 0.95;
-            }
-        }
-        
-        @media (min-width: 769px) and (max-width: 1024px) {
-            :root {
-                --base-font-size: 17px;
-                --scale-factor: 1;
-            }
-        }
-        
-        @media (min-width: 1025px) and (max-width: 1440px) {
-            :root {
-                --base-font-size: 18px;
-                --scale-factor: 1.05;
-            }
-        }
-        
-        @media (min-width: 1441px) and (max-width: 1920px) {
-            :root {
-                --base-font-size: 19px;
-                --scale-factor: 1.1;
-            }
-        }
-        
-        @media (min-width: 1921px) {
-            :root {
-                --base-font-size: 20px;
-                --scale-factor: 1.15;
-            }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --transition: all 0.3s ease;
         }
 
         html {
-            font-size: var(--base-font-size);
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
         }
 
         body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
-            opacity: 0;
-            animation: fadeInBody 0.5s forwards 10.5s;
             min-height: 100vh;
-            width: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
-        @keyframes fadeInBody {
-            to { opacity: 1; }
-        }
-
-        /* === ЭКРАН ОПТИМИЗАЦИИ (10 СЕКУНД) === */
-        .optimization-screen {
+        /* ===== ЭКРАН ЗАГРУЗКИ ===== */
+        #loadingScreen {
             position: fixed;
             top: 0;
             left: 0;
@@ -147,559 +79,117 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
-        .optimization-screen.hidden {
+        #loadingScreen.hidden {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
         }
 
-        .optimization-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(94, 92, 230, 0.1) 0%, transparent 70%);
-            filter: blur(40px);
-            opacity: 0.5;
-            animation: pulseBlur 2s infinite ease-in-out;
-        }
-
-        @keyframes pulseBlur {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
-        .optimization-logo {
-            width: calc(120px * var(--scale-factor));
-            height: calc(120px * var(--scale-factor));
-            border-radius: calc(28px * var(--scale-factor));
+        .loading-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
             background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: calc(3rem * var(--scale-factor));
-            margin-bottom: calc(40px * var(--scale-factor));
-            animation: logoFloat 3s infinite ease-in-out;
-            position: relative;
-            z-index: 2;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .optimization-logo::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-            background: inherit;
-            filter: blur(calc(30px * var(--scale-factor)));
-            opacity: 0.5;
-            z-index: -1;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
-        }
-
-        .optimization-text {
-            font-size: calc(1.5rem * var(--scale-factor));
-            font-weight: 600;
-            margin-bottom: calc(30px * var(--scale-factor));
-            color: var(--text-primary);
-            text-align: center;
-            z-index: 2;
-            max-width: 90%;
-        }
-
-        .optimization-progress-container {
-            width: min(300px, 80vw);
-            height: calc(4px * var(--scale-factor));
+        .loading-progress {
+            width: 300px;
+            max-width: 80%;
+            height: 4px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: calc(2px * var(--scale-factor));
+            border-radius: 2px;
             overflow: hidden;
-            position: relative;
-            z-index: 2;
-            margin-bottom: calc(40px * var(--scale-factor));
+            margin: 20px 0;
         }
 
-        .optimization-progress-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .loading-progress-bar {
             height: 100%;
             width: 0%;
             background: var(--gradient-primary);
-            border-radius: calc(2px * var(--scale-factor));
-            transition: width 0.3s ease;
-            animation: optimizationProgress 10s linear forwards;
+            animation: loading 10s linear forwards;
         }
 
-        @keyframes optimizationProgress {
+        @keyframes loading {
             0% { width: 0%; }
-            10% { width: 15%; }
-            20% { width: 30%; }
-            30% { width: 45%; }
-            40% { width: 55%; }
-            50% { width: 65%; }
-            60% { width: 75%; }
-            70% { width: 82%; }
-            80% { width: 88%; }
-            90% { width: 94%; }
             100% { width: 100%; }
         }
 
-        .optimization-stats {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: calc(20px * var(--scale-factor));
-            margin-top: calc(30px * var(--scale-factor));
-            color: var(--text-secondary);
-            font-size: calc(0.9rem * var(--scale-factor));
-            z-index: 2;
-            max-width: 90%;
-        }
-
-        .optimization-stat {
-            text-align: center;
-            min-width: 100px;
-            flex: 1;
-        }
-
-        .optimization-stat-number {
-            font-size: calc(1.2rem * var(--scale-factor));
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: calc(5px * var(--scale-factor));
-        }
-
-        .optimization-details {
-            position: absolute;
-            bottom: calc(40px * var(--scale-factor));
-            left: 0;
-            width: 100%;
-            text-align: center;
-            color: var(--text-tertiary);
-            font-size: calc(0.8rem * var(--scale-factor));
-            z-index: 2;
-            padding: 0 calc(20px * var(--scale-factor));
-        }
-
-        .optimization-message {
-            font-size: calc(1rem * var(--scale-factor));
-            color: var(--text-secondary);
-            margin-top: calc(20px * var(--scale-factor));
-            text-align: center;
-            max-width: 80%;
-            z-index: 2;
-        }
-
-        /* === ИСПРАВЛЕННАЯ КАРТОЧКА СОБЫТИЯ (ВИДНА ПОВЕРХ ШАПКИ) === */
-        .event-card {
-            position: fixed;
-            top: 100px; /* Отступ от верхнего края, под шапкой */
-            right: min(20px, 2vw);
-            z-index: 1001; /* Выше чем шапка (1000) */
-            width: min(320px, 90vw);
-            padding: calc(25px * var(--scale-factor));
-            border-radius: calc(20px * var(--scale-factor));
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(calc(30px * var(--scale-factor)));
-            -webkit-backdrop-filter: blur(calc(30px * var(--scale-factor)));
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                0 calc(20px * var(--scale-factor)) calc(40px * var(--scale-factor)) rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                0 0 40px rgba(94, 92, 230, 0.2);
-            animation: eventCardAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            transform: translateX(400px);
-            opacity: 0;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* На мобильных - карточка по центру */
-        @media (max-width: 768px) {
-            .event-card {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                right: auto;
-                transform: translate(-50%, -50%) translateX(400px);
-                width: calc(100% - 40px);
-                max-width: 400px;
-                max-height: 80vh;
-                animation: eventCardAppearMobile 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            }
-            
-            @keyframes eventCardAppearMobile {
-                to {
-                    transform: translate(-50%, -50%) translateX(0);
-                    opacity: 1;
-                }
-            }
-        }
-
-        /* На маленьких экранах - адаптация */
-        @media (max-height: 600px) {
-            .event-card {
-                top: 80px;
-                max-height: calc(100vh - 100px);
-            }
-        }
-
-        @keyframes eventCardAppear {
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .event-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: calc(20px * var(--scale-factor));
-        }
-
-        .event-title {
-            font-size: calc(1.3rem * var(--scale-factor));
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .event-badge {
-            padding: calc(5px * var(--scale-factor)) calc(12px * var(--scale-factor));
-            background: var(--gradient-accent);
-            border-radius: calc(10px * var(--scale-factor));
-            font-size: calc(0.8rem * var(--scale-factor));
-            font-weight: 700;
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .event-date {
-            font-size: calc(1rem * var(--scale-factor));
-            color: var(--text-secondary);
-            margin-bottom: calc(15px * var(--scale-factor));
-            display: flex;
-            align-items: center;
-            gap: calc(8px * var(--scale-factor));
-        }
-
-        .event-date i {
-            color: var(--warning);
-        }
-
-        .countdown {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: calc(10px * var(--scale-factor));
-            margin-bottom: calc(20px * var(--scale-factor));
-        }
-
-        @media (max-width: 480px) {
-            .countdown {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .countdown-item {
-            text-align: center;
-            padding: calc(12px * var(--scale-factor)) calc(5px * var(--scale-factor));
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: calc(12px * var(--scale-factor));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition-smooth);
-        }
-
-        .countdown-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .countdown-number {
-            font-size: calc(1.5rem * var(--scale-factor));
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: calc(5px * var(--scale-factor));
-            font-family: 'SF Pro Rounded', sans-serif;
-            text-shadow: 0 0 10px rgba(94, 92, 230, 0.3);
-        }
-
-        .countdown-label {
-            font-size: calc(0.7rem * var(--scale-factor));
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .event-close {
-            position: absolute;
-            top: calc(15px * var(--scale-factor));
-            right: calc(15px * var(--scale-factor));
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--text-tertiary);
-            font-size: calc(1rem * var(--scale-factor));
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            width: calc(30px * var(--scale-factor));
-            height: calc(30px * var(--scale-factor));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-
-        .event-close:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
-        }
-
-        /* Кнопка показа карточки события */
-        .event-toggle-btn {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 1000;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(94, 92, 230, 0.3);
-            transition: var(--transition-bounce);
-            animation: pulse 2s infinite;
-        }
-
-        .event-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 25px rgba(94, 92, 230, 0.5);
-        }
-
-        .event-toggle-btn.hidden {
-            display: none;
-        }
-
-        /* === БЕТА-БЕЙДЖ === */
-        .beta-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: calc(10px * var(--scale-factor));
-            padding: calc(4px * var(--scale-factor)) calc(12px * var(--scale-factor));
-            font-size: calc(0.7rem * var(--scale-factor));
-            font-weight: 800;
-            letter-spacing: calc(0.5px * var(--scale-factor));
-            color: #FF9F0A;
-            background: rgba(255, 159, 10, 0.1);
-            border: calc(2px * var(--scale-factor)) solid rgba(255, 159, 10, 0.4);
-            border-radius: calc(12px * var(--scale-factor));
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-            animation: betaPulse 2s infinite ease-in-out;
-            box-shadow: 0 0 calc(15px * var(--scale-factor)) rgba(255, 159, 10, 0.2);
-        }
-
-        .beta-badge::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            animation: betaShine 3s infinite ease-in-out;
-        }
-
-        @keyframes betaPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 calc(15px * var(--scale-factor)) rgba(255, 159, 10, 0.2);
-            }
-            50% { 
-                transform: scale(1.05);
-                box-shadow: 0 0 calc(25px * var(--scale-factor)) rgba(255, 159, 10, 0.4);
-                border-color: rgba(255, 159, 10, 0.6);
-            }
-        }
-
-        @keyframes betaShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* === ОСНОВНОЙ КОНТЕНТ === */
-        .glass {
-            background: var(--bg-glass);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-        }
-
-        section {
-            padding: calc(120px * var(--scale-factor)) calc(20px * var(--scale-factor));
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .container {
-            max-width: min(1400px, 95vw);
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'SF Pro Rounded', -apple-system, sans-serif;
-            font-weight: 700;
-            line-height: 1.1;
-        }
-
-        h1 {
-            font-size: calc(4.5rem * var(--scale-factor));
-            margin-bottom: calc(1.5rem * var(--scale-factor));
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        h2 {
-            font-size: calc(3.5rem * var(--scale-factor));
-            margin-bottom: calc(2rem * var(--scale-factor));
-        }
-
-        h3 {
-            font-size: calc(2rem * var(--scale-factor));
-            margin-bottom: calc(1rem * var(--scale-factor));
-        }
-
-        p {
-            color: var(--text-secondary);
-            font-size: calc(1.2rem * var(--scale-factor));
-            margin-bottom: calc(1.5rem * var(--scale-factor));
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .section-subtitle {
-            color: var(--primary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: calc(2px * var(--scale-factor));
-            margin-bottom: calc(1rem * var(--scale-factor));
-            display: inline-block;
-            font-size: calc(1rem * var(--scale-factor));
-        }
-
-        /* Навигация - исправлен z-index */
+        /* ===== ШАПКА ===== */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000; /* Ниже карточки события (1001) */
-            padding: calc(20px * var(--scale-factor)) 0;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(calc(20px * var(--scale-factor)));
-            -webkit-backdrop-filter: blur(calc(20px * var(--scale-factor)));
+            padding: 20px 0;
             background: rgba(0, 0, 0, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
         }
 
-        nav {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 min(20px, 5vw);
-            max-width: min(1400px, 95vw);
-            margin: 0 auto;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            font-size: calc(2rem * var(--scale-factor));
-            font-weight: 900;
-            color: white;
+            gap: 12px;
             text-decoration: none;
-            font-family: 'SF Pro Rounded', sans-serif;
-            flex-shrink: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
         }
 
         .logo-icon {
-            width: calc(50px * var(--scale-factor));
-            height: calc(50px * var(--scale-factor));
-            border-radius: calc(15px * var(--scale-factor));
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: calc(15px * var(--scale-factor));
-            font-size: calc(1.5rem * var(--scale-factor));
-            flex-shrink: 0;
+            font-size: 1.2rem;
         }
 
-        .logo-text {
-            display: flex;
-            align-items: center;
-            gap: calc(5px * var(--scale-factor));
-        }
-
-        .vay {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 900;
-        }
-
-        .message {
-            color: var(--text-primary);
-            font-weight: 400;
+        .beta-badge {
+            padding: 4px 12px;
+            background: rgba(255, 159, 10, 0.1);
+            border: 1px solid rgba(255, 159, 10, 0.3);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--warning);
+            margin-left: 10px;
         }
 
         .nav-links {
             display: flex;
-            gap: min(40px, 2vw);
-            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
         }
 
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block !important;
             }
         }
 
@@ -707,1212 +197,700 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: var(--transition-smooth);
-            position: relative;
-            padding: calc(5px * var(--scale-factor)) 0;
-            font-size: calc(1.1rem * var(--scale-factor));
-            white-space: nowrap;
+            transition: var(--transition);
         }
 
         .nav-link:hover {
             color: var(--primary);
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient-primary);
-            transition: var(--transition-smooth);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Мобильное меню */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
             color: var(--text-secondary);
-            font-size: calc(1.5rem * var(--scale-factor));
+            font-size: 1.5rem;
             cursor: pointer;
-            padding: calc(10px * var(--scale-factor));
-            border-radius: calc(10px * var(--scale-factor));
-            transition: var(--transition-smooth);
+            padding: 5px;
         }
 
-        .mobile-menu-btn:hover {
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* ===== КАРТОЧКА СОБЫТИЯ - ИСПРАВЛЕННАЯ ===== */
+        .event-container {
+            position: fixed;
+            top: 90px; /* Под шапкой */
+            right: 20px;
+            z-index: 1001; /* Выше шапки */
+            width: 320px;
+            max-width: calc(100vw - 40px);
+        }
+
+        @media (max-width: 768px) {
+            .event-container {
+                position: relative;
+                top: auto;
+                right: auto;
+                width: 100%;
+                max-width: 400px;
+                margin: 20px auto;
+            }
+        }
+
+        .event-card {
+            background: var(--bg-glass-dark);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--glass-shadow);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .event-badge {
+            padding: 4px 12px;
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .event-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .countdown-item {
+            text-align: center;
+            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .countdown-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
             background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .event-close:hover {
+            background: rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
         }
 
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: min(300px, 80vw);
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(calc(30px * var(--scale-factor)));
-            -webkit-backdrop-filter: blur(calc(30px * var(--scale-factor)));
-            padding: calc(80px * var(--scale-factor)) calc(30px * var(--scale-factor));
-            transition: var(--transition-smooth);
-            z-index: 999;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-menu .nav-link {
-            display: block;
-            padding: calc(15px * var(--scale-factor)) 0;
-            font-size: calc(1.3rem * var(--scale-factor));
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu-close {
-            position: absolute;
-            top: calc(20px * var(--scale-factor));
-            right: calc(20px * var(--scale-factor));
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: calc(1.5rem * var(--scale-factor));
-            cursor: pointer;
-            padding: calc(10px * var(--scale-factor));
-            border-radius: 50%;
-        }
-
-        /* Герой секция */
+        /* ===== ГЛАВНАЯ СЕКЦИЯ ===== */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
+            padding: 120px 20px 80px;
             position: relative;
             overflow: hidden;
-            padding-top: calc(80px * var(--scale-factor));
         }
 
         .hero-content {
-            max-width: min(800px, 90vw);
-            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
         }
 
         .hero-tagline {
-            font-size: calc(1.5rem * var(--scale-factor));
-            margin-bottom: calc(2rem * var(--scale-factor));
+            font-size: 1.3rem;
             color: var(--text-secondary);
-            font-weight: 300;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
-        .hero-highlight {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
+        /* ===== СЕКЦИИ ===== */
+        section {
+            padding: 100px 20px;
+            position: relative;
         }
 
-        .update-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: calc(10px * var(--scale-factor));
-            padding: calc(12px * var(--scale-factor)) calc(24px * var(--scale-factor));
-            background: rgba(94, 92, 230, 0.1);
-            border: 1px solid rgba(94, 92, 230, 0.3);
-            border-radius: calc(50px * var(--scale-factor));
-            font-size: calc(1rem * var(--scale-factor));
-            font-weight: 600;
-            margin-bottom: calc(2rem * var(--scale-factor));
+        section:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        .section-subtitle {
+            text-align: center;
             color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 60px;
         }
 
         /* Карточки функций */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
-            gap: calc(30px * var(--scale-factor));
-            margin-top: calc(60px * var(--scale-factor));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .feature-card {
-            padding: calc(40px * var(--scale-factor)) calc(30px * var(--scale-factor));
-            border-radius: calc(24px * var(--scale-factor));
-            transition: var(--transition-bounce);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            min-height: min(400px, 50vh);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: var(--transition);
         }
 
         .feature-card:hover {
-            transform: translateY(calc(-10px * var(--scale-factor)));
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: var(--transition-smooth);
-            z-index: -1;
-        }
-
-        .feature-card:hover::before {
-            opacity: 0.1;
+            transform: translateY(-5px);
         }
 
         .feature-icon {
-            width: calc(70px * var(--scale-factor));
-            height: calc(70px * var(--scale-factor));
-            border-radius: calc(18px * var(--scale-factor));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: calc(25px * var(--scale-factor));
-            font-size: calc(1.8rem * var(--scale-factor));
-            background: var(--gradient-primary);
-            color: white;
-        }
-
-        .feature-number {
-            position: absolute;
-            top: calc(20px * var(--scale-factor));
-            right: calc(20px * var(--scale-factor));
-            font-size: calc(3rem * var(--scale-factor));
-            font-weight: 900;
-            opacity: 0.05;
-            color: white;
-            font-family: 'SF Pro Rounded', sans-serif;
-        }
-
-        /* Демо безопасности */
-        .security-demo {
-            display: flex;
-            gap: min(60px, 5vw);
-            align-items: center;
-            margin-top: calc(60px * var(--scale-factor));
-            flex-wrap: wrap;
-        }
-
-        .security-visual {
-            flex: 1;
-            position: relative;
-            height: min(400px, 50vh);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: min(300px, 100%);
-        }
-
-        .security-shield {
-            width: min(250px, 80%);
-            height: min(250px, 80%);
-            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
             background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            animation: shieldPulse 3s infinite ease-in-out;
-        }
-
-        .security-shield::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: inherit;
-            filter: blur(calc(40px * var(--scale-factor)));
-            opacity: 0.4;
-            z-index: -1;
-        }
-
-        .security-shield i {
-            font-size: calc(4rem * var(--scale-factor));
+            font-size: 1.8rem;
             color: white;
+            margin-bottom: 24px;
         }
 
-        .threat-indicator {
-            position: absolute;
-            width: calc(60px * var(--scale-factor));
-            height: calc(60px * var(--scale-factor));
-            border-radius: 50%;
-            background: var(--gradient-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: threatFloat 4s infinite ease-in-out;
-        }
-
-        .threat-indicator:nth-child(2) {
-            top: 20%;
-            left: 20%;
-            animation-delay: 0.5s;
-        }
-
-        .threat-indicator:nth-child(3) {
-            bottom: 20%;
-            right: 20%;
-            animation-delay: 1s;
-        }
-
-        @keyframes shieldPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes threatFloat {
-            0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-            50% { transform: translate(20px, -20px); opacity: 1; }
-        }
-
-        /* Сервисы Vaymessage */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-            gap: calc(30px * var(--scale-factor));
-            margin-top: calc(60px * var(--scale-factor));
-        }
-
-        .service-card {
-            padding: calc(40px * var(--scale-factor)) calc(30px * var(--scale-factor));
-            border-radius: calc(24px * var(--scale-factor));
-            text-align: center;
-            transition: var(--transition-bounce);
-            min-height: min(350px, 40vh);
-        }
-
-        .service-card:hover {
-            transform: translateY(calc(-10px * var(--scale-factor))) scale(1.02);
-        }
-
-        .service-icon {
-            width: calc(80px * var(--scale-factor));
-            height: calc(80px * var(--scale-factor));
-            border-radius: calc(20px * var(--scale-factor));
-            margin: 0 auto calc(25px * var(--scale-factor));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: calc(2rem * var(--scale-factor));
-            color: white;
-        }
-
-        .service-cloud .service-icon {
-            background: var(--gradient-system);
-        }
-
-        .service-office .service-icon {
-            background: var(--gradient-primary);
-        }
-
-        .service-music .service-icon {
-            background: var(--gradient-secondary);
-        }
-
-        .service-video .service-icon {
-            background: var(--gradient-accent);
-        }
-
-        /* Футер */
+        /* ===== ФУТЕР ===== */
         footer {
-            padding: calc(100px * var(--scale-factor)) calc(20px * var(--scale-factor)) calc(60px * var(--scale-factor));
-            position: relative;
-            overflow: hidden;
-            min-height: 50vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-content {
+            padding: 80px 20px 40px;
+            background: var(--bg-secondary);
             text-align: center;
-            max-width: min(800px, 90vw);
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
 
         .footer-logo {
-            font-size: calc(3rem * var(--scale-factor));
-            margin-bottom: calc(30px * var(--scale-factor));
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: calc(15px * var(--scale-factor));
-            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .footer-tagline {
-            font-size: calc(1.3rem * var(--scale-factor));
-            margin-bottom: calc(40px * var(--scale-factor));
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
         }
 
         .update-button {
             display: inline-flex;
             align-items: center;
-            gap: calc(15px * var(--scale-factor));
-            padding: calc(20px * var(--scale-factor)) calc(50px * var(--scale-factor));
-            border-radius: calc(50px * var(--scale-factor));
+            gap: 12px;
+            padding: 16px 32px;
             background: var(--gradient-primary);
             color: white;
-            font-weight: 700;
-            font-size: calc(1.3rem * var(--scale-factor));
             text-decoration: none;
-            transition: var(--transition-bounce);
-            margin-top: calc(20px * var(--scale-factor));
-            box-shadow: 
-                0 calc(15px * var(--scale-factor)) calc(35px * var(--scale-factor)) rgba(94, 92, 230, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition);
+            margin-bottom: 40px;
         }
 
         .update-button:hover {
-            transform: translateY(calc(-8px * var(--scale-factor))) scale(1.05);
-            box-shadow: 
-                0 calc(25px * var(--scale-factor)) calc(50px * var(--scale-factor)) rgba(94, 92, 230, 0.5),
-                0 0 calc(20px * var(--scale-factor)) rgba(94, 92, 230, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(94, 92, 230, 0.3);
         }
 
         .copyright {
-            margin-top: calc(60px * var(--scale-factor));
             color: var(--text-tertiary);
-            font-size: calc(0.9rem * var(--scale-factor));
+            font-size: 0.9rem;
+            margin-top: 40px;
         }
 
-        /* Анимация появления элементов */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(calc(30px * var(--scale-factor)));
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Адаптивные медиа-запросы */
+        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 768px) {
             .hero {
-                padding-top: calc(100px * var(--scale-factor));
-            }
-            
-            h1 {
-                font-size: calc(2.8rem * var(--scale-factor));
-            }
-            
-            h2 {
-                font-size: calc(2.2rem * var(--scale-factor));
+                padding: 100px 20px 60px;
             }
             
             section {
-                padding: calc(80px * var(--scale-factor)) calc(15px * var(--scale-factor));
+                padding: 80px 20px;
             }
             
-            .feature-card, .service-card {
-                padding: calc(25px * var(--scale-factor)) calc(20px * var(--scale-factor));
-            }
-            
-            .security-demo {
-                flex-direction: column;
-            }
-            
-            .logo-text {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0;
-            }
-            
-            .event-toggle-btn {
-                top: 90px;
-                right: 15px;
-                width: 45px;
-                height: 45px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: calc(2.2rem * var(--scale-factor));
-            }
-            
-            h2 {
-                font-size: calc(1.8rem * var(--scale-factor));
-            }
-            
-            h3 {
-                font-size: calc(1.5rem * var(--scale-factor));
-            }
-            
-            p {
-                font-size: calc(1rem * var(--scale-factor));
-            }
-            
-            .features-grid, .services-grid {
+            .features-grid {
                 grid-template-columns: 1fr;
             }
             
             .countdown {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            footer {
-                padding: calc(60px * var(--scale-factor)) calc(15px * var(--scale-factor)) calc(40px * var(--scale-factor));
-            }
-            
-            .event-card {
-                width: calc(100% - 30px);
-                padding: calc(20px * var(--scale-factor));
-            }
         }
     </style>
 </head>
 <body>
-    <!-- ЭКРАН ОПТИМИЗАЦИИ (10 СЕКУНД) -->
-    <div class="optimization-screen" id="optimizationScreen">
-        <div class="optimization-bg"></div>
-        <div class="optimization-logo">
+    <!-- ЭКРАН ЗАГРУЗКИ -->
+    <div id="loadingScreen">
+        <div class="loading-logo">
             <i class="fas fa-comment-alt"></i>
         </div>
-        <div class="optimization-text">Оптимизация Vaymessage под ваше устройство...</div>
-        
-        <div class="optimization-progress-container">
-            <div class="optimization-progress-bar"></div>
+        <div style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 20px;">
+            Оптимизация Vaymessage...
         </div>
-        
-        <div class="optimization-message" id="optimizationMessage">
-            Определение характеристик устройства...
+        <div class="loading-progress">
+            <div class="loading-progress-bar"></div>
         </div>
-        
-        <div class="optimization-stats">
-            <div class="optimization-stat">
-                <div class="optimization-stat-number" id="cpuStat">0%</div>
-                <div>Процессор</div>
-            </div>
-            <div class="optimization-stat">
-                <div class="optimization-stat-number" id="gpuStat">0%</div>
-                <div>Графика</div>
-            </div>
-            <div class="optimization-stat">
-                <div class="optimization-stat-number" id="ramStat">0%</div>
-                <div>Память</div>
-            </div>
-            <div class="optimization-stat">
-                <div class="optimization-stat-number" id="networkStat">0%</div>
-                <div>Сеть</div>
-            </div>
-        </div>
-        
-        <div class="optimization-details">
-            <span id="deviceInfo">Определение устройства...</span>
-            • 
-            <span id="optimizationTime">Время оптимизации: 0s</span>
+        <div style="color: var(--text-tertiary); font-size: 0.9rem; margin-top: 20px;">
+            Инициализация системы...
         </div>
     </div>
 
-    <!-- КНОПКА ПОКАЗА КАРТОЧКИ СОБЫТИЯ -->
-    <button class="event-toggle-btn" id="eventToggleBtn" title="Показать таймер запуска">
-        <i class="fas fa-rocket"></i>
-    </button>
-
-    <!-- КАРТОЧКА СОБЫТИЯ (ИСПРАВЛЕННАЯ ВИДИМОСТЬ) -->
-    <div class="event-card glass" id="eventCard">
-        <button class="event-close" id="eventClose">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="event-header">
-            <div class="event-title">Запуск Vaymessage</div>
-            <div class="event-badge">Скоро</div>
-        </div>
-        <div class="event-date">
-            <i class="fas fa-calendar-alt"></i>
-            <strong>1 июля 2026 года</strong>
-        </div>
-        <div class="countdown">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">00</div>
-                <div class="countdown-label">дней</div>
+    <!-- КАРТОЧКА СОБЫТИЯ -->
+    <div class="event-container" id="eventContainer">
+        <div class="event-card">
+            <button class="event-close" id="eventClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="event-header">
+                <div class="event-title">Запуск Vaymessage</div>
+                <div class="event-badge">Скоро</div>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">00</div>
-                <div class="countdown-label">часов</div>
+            <div class="event-date">
+                <i class="fas fa-calendar-alt"></i>
+                1 июля 2026
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">00</div>
-                <div class="countdown-label">минут</div>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">дней</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">часов</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">минут</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">секунд</div>
+                </div>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">00</div>
-                <div class="countdown-label">секунд</div>
-            </div>
-        </div>
-        <p style="font-size: calc(0.9rem * var(--scale-factor)); color: var(--text-secondary);">
-            <i class="fas fa-info-circle" style="color: var(--info); margin-right: 8px;"></i>
-            Мессенджер нового поколения откроется для всех пользователей. 
-            Подготовьтесь к революции в общении!
-        </p>
-        <div style="margin-top: 20px; padding: 15px; background: rgba(94, 92, 230, 0.1); border-radius: 12px; border-left: 3px solid var(--primary);">
-            <p style="font-size: calc(0.85rem * var(--scale-factor)); color: var(--text-secondary); margin: 0;">
-                <i class="fas fa-bell" style="color: var(--warning); margin-right: 8px;"></i>
-                <strong>Будьте первыми!</strong> Подпишитесь на уведомления о запуске.
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 16px;">
+                Мессенджер нового поколения откроется для всех пользователей.
             </p>
         </div>
     </div>
 
-    <!-- МОБИЛЬНОЕ МЕНЮ -->
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" id="mobileMenuClose">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="#features" class="nav-link">Возможности</a>
-        <a href="#security" class="nav-link">Безопасность</a>
-        <a href="#ai" class="nav-link">AI функции</a>
-        <a href="#interface" class="nav-link">Интерфейс</a>
-        <a href="#services" class="nav-link">Сервисы</a>
-        <a href="#optimization" class="nav-link">Оптимизация</a>
-    </div>
-
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <!-- Навигация -->
+    <!-- ШАПКА -->
     <header>
-        <nav>
+        <div class="nav-container">
             <a href="#" class="logo">
                 <div class="logo-icon">
                     <i class="fas fa-comment-alt"></i>
                 </div>
-                <div class="logo-text">
-                    <span class="vay">Vay</span>
-                    <span class="message">message</span>
-                    <span class="beta-badge">Бета</span>
-                </div>
+                Vaymessage
+                <span class="beta-badge">Бета</span>
             </a>
             <div class="nav-links">
                 <a href="#features" class="nav-link">Возможности</a>
                 <a href="#security" class="nav-link">Безопасность</a>
                 <a href="#ai" class="nav-link">AI функции</a>
-                <a href="#interface" class="nav-link">Интерфейс</a>
                 <a href="#services" class="nav-link">Сервисы</a>
-                <a href="#optimization" class="nav-link">Оптимизация</a>
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
-        </nav>
+        </div>
     </header>
 
-    <!-- Герой секция -->
+    <!-- ГЛАВНАЯ СЕКЦИЯ -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <div class="update-badge">
-                    <i class="fas fa-bolt"></i>
-                    Новое поколение общения
+        <div class="hero-content">
+            <h1>Vaymessage</h1>
+            <p class="hero-tagline">
+                Первый полностью адаптивный мессенджер с искусственным интеллектом, 
+                продвинутой безопасностью и интерфейсом нового поколения.
+            </p>
+        </div>
+    </section>
+
+    <!-- ВОЗМОЖНОСТИ -->
+    <section id="features">
+        <p class="section-subtitle">Инновации</p>
+        <h2 class="section-title">Возможности нового поколения</h2>
+        <p class="section-description">
+            Vaymessage объединяет лучшие технологии для идеального общения
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
                 </div>
-                <h1>Vaymessage</h1>
-                <p class="hero-tagline">
-                    Первый полностью адаптивный мессенджер с искусственным интеллектом, 
-                    продвинутой безопасностью и интерфейсом нового поколения.
-                    <span class="hero-highlight">Общение будущего начинается здесь.</span>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Интеллектуальный AI</h3>
+                <p style="color: var(--text-secondary);">
+                    Умный помощник в каждом чате с расшифровкой голосовых и интеллектуальными подсказками
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Максимальная безопасность</h3>
+                <p style="color: var(--text-secondary);">
+                    Многоуровневое шифрование и система защиты от взлома в реальном времени
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Адаптивный интерфейс</h3>
+                <p style="color: var(--text-secondary);">
+                    Liquid Glass дизайн, автоматически подстраивающийся под любое устройство
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Возможности -->
-    <section id="features" style="background: var(--bg-secondary);">
-        <div class="container">
-            <p class="section-subtitle">Инновации</p>
-            <h2>Возможности нового поколения</h2>
-            <p>Vaymessage объединяет лучшие технологии для идеального общения</p>
+    <!-- БЕЗОПАСНОСТЬ -->
+    <section id="security" style="background: var(--bg-secondary);">
+        <p class="section-subtitle">Защита данных</p>
+        <h2 class="section-title">Безопасность на первом месте</h2>
+        <p class="section-description">
+            Ваши переписки защищены на уровне государственных стандартов
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Сквозное шифрование</h3>
+                <p style="color: var(--text-secondary);">
+                    Все сообщения шифруются до отправки на сервер с военными алгоритмами
+                </p>
+            </div>
             
-            <div class="features-grid">
-                <div class="feature-card glass fade-in">
-                    <div class="feature-number">01</div>
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>Интеллектуальный AI</h3>
-                    <p>Умный помощник в каждом чате с расшифровкой голосовых и интеллектуальными подсказками</p>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
                 </div>
-                
-                <div class="feature-card glass fade-in">
-                    <div class="feature-number">02</div>
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Максимальная безопасность</h3>
-                    <p>Многоуровневое шифрование и система защиты от взлома в реальном времени</p>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Система тревоги</h3>
+                <p style="color: var(--text-secondary);">
+                    Мгновенные уведомления о попытках несанкционированного доступа
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-id-card"></i>
                 </div>
-                
-                <div class="feature-card glass fade-in">
-                    <div class="feature-number">03</div>
-                    <div class="feature-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>Адаптивный интерфейс</h3>
-                    <p>Liquid Glass дизайн, автоматически подстраивающийся под любое устройство</p>
-                </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Vaymessage ID</h3>
+                <p style="color: var(--text-secondary);">
+                    Единый центр управления безопасностью и сеансами на всех устройствах
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Безопасность -->
-    <section id="security">
-        <div class="container">
-            <p class="section-subtitle">Защита данных</p>
-            <h2>Безопасность на первом месте</h2>
-            <p>Ваши переписки защищены на уровне государственных стандартов</p>
+    <!-- AI ФУНКЦИИ -->
+    <section id="ai">
+        <p class="section-subtitle">Искусственный интеллект</p>
+        <h2 class="section-title">Умный помощник в общении</h2>
+        <p class="section-description">
+            AI делает общение удобнее, безопаснее и эффективнее
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--gradient-secondary);">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Расшифровка голосовых</h3>
+                <p style="color: var(--text-secondary);">
+                    Автоматическая расшифровка голосовых сообщений с высокой точностью
+                </p>
+            </div>
             
-            <div class="security-demo">
-                <div class="security-visual">
-                    <div class="security-shield">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="threat-indicator">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="threat-indicator">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--gradient-secondary);">
+                    <i class="fas fa-music"></i>
                 </div>
-                
-                <div class="security-features">
-                    <div class="feature-card glass fade-in">
-                        <h3>Сквозное шифрование</h3>
-                        <p>Все сообщения шифруются до отправки на сервер с военными алгоритмами</p>
-                    </div>
-                    
-                    <div class="feature-card glass fade-in">
-                        <h3>Система тревоги</h3>
-                        <p>Мгновенные уведомления о попытках несанкционированного доступа</p>
-                    </div>
-                    
-                    <div class="feature-card glass fade-in">
-                        <h3>Vaymessage ID</h3>
-                        <p>Единый центр управления безопасностью и сеансами на всех устройствах</p>
-                    </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">@музыка команды</h3>
+                <p style="color: var(--text-secondary);">
+                    Быстрый поиск и отправка музыки через умные команды в чатах
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--gradient-secondary);">
+                    <i class="fas fa-robot"></i>
                 </div>
+                <h3 style="margin-bottom: 16px; font-size: 1.5rem;">AI-модерация</h3>
+                <p style="color: var(--text-secondary);">
+                    Защита от спама и мошенников с помощью искусственного интеллекта
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- AI функции -->
-    <section id="ai" style="background: var(--bg-secondary);">
-        <div class="container">
-            <p class="section-subtitle">Искусственный интеллект</p>
-            <h2>Умный помощник в общении</h2>
-            <p>AI делает общение удобнее, безопаснее и эффективнее</p>
-            
-            <div class="features-grid">
-                <div class="feature-card glass fade-in">
-                    <div class="feature-icon" style="background: var(--gradient-secondary);">
-                        <i class="fas fa-microphone"></i>
-                    </div>
-                    <h3>Расшифровка голосовых</h3>
-                    <p>Автоматическая расшифровка голосовых сообщений с высокой точностью</p>
-                </div>
-                
-                <div class="feature-card glass fade-in">
-                    <div class="feature-icon" style="background: var(--gradient-secondary);">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <h3>@музыка команды</h3>
-                    <p>Быстрый поиск и отправка музыки через умные команды в чатах</p>
-                </div>
-                
-                <div class="feature-card glass fade-in">
-                    <div class="feature-icon" style="background: var(--gradient-secondary);">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>AI-модерация</h3>
-                    <p>Защита от спама и мошенников с помощью искусственного интеллекта</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Сервисы Vaymessage -->
-    <section id="services">
-        <div class="container">
-            <p class="section-subtitle">Экосистема</p>
-            <h2>Больше чем мессенджер</h2>
-            <p>Полный набор сервисов для общения, работы и развлечений</p>
-            
-            <div class="services-grid">
-                <div class="service-card glass service-cloud fade-in">
-                    <div class="service-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Vay Cloud</h3>
-                    <p>Безопасное облачное хранилище с автоматической проверкой файлов</p>
-                </div>
-                
-                <div class="service-card glass service-office fade-in">
-                    <div class="service-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3>Vay Office</h3>
-                    <p>Работа с документами и таблицами прямо в мессенджере</p>
-                </div>
-                
-                <div class="service-card glass service-music fade-in">
-                    <div class="service-icon">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <h3>Vay Music</h3>
-                    <p>Стриминг музыки и подкастов с интеллектуальными рекомендациями</p>
-                </div>
-                
-                <div class="service-card glass service-video fade-in">
-                    <div class="service-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h3>Vay Video</h3>
-                    <p>Платформа для видео и трансляций в высоком качестве</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Оптимизация -->
-    <section id="optimization" style="background: var(--bg-secondary);">
-        <div class="container">
-            <p class="section-subtitle">Технологии</p>
-            <h2>Оптимизация под любые устройства</h2>
-            <p>Работает идеально на смартфонах, планшетах, компьютерах и телевизорах</p>
-            
-            <div class="security-demo">
-                <div class="security-visual">
-                    <div class="security-shield" style="background: var(--gradient-system);">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="threat-indicator" style="background: var(--gradient-secondary);">
-                        <i class="fas fa-tablet-alt"></i>
-                    </div>
-                    <div class="threat-indicator" style="background: var(--gradient-accent);">
-                        <i class="fas fa-laptop"></i>
-                    </div>
-                </div>
-                
-                <div class="security-features">
-                    <div class="feature-card glass fade-in">
-                        <h3>Адаптивный интерфейс</h3>
-                        <p>Автоматическая подстройка под размер экрана и возможности устройства</p>
-                    </div>
-                    
-                    <div class="feature-card glass fade-in">
-                        <h3>Оптимизация ресурсов</h3>
-                        <p>Умное управление памятью и производительностью для любой техники</p>
-                    </div>
-                    
-                    <div class="feature-card glass fade-in">
-                        <h3>Без загрузок</h3>
-                        <p>Браузерная версия работает без установки приложений</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Футер -->
+    <!-- ФУТЕР -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="logo-icon" style="width: calc(70px * var(--scale-factor)); height: calc(70px * var(--scale-factor));">
-                        <i class="fas fa-comment-alt"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span class="vay">Vay</span>
-                        <span class="message">message</span>
-                        <span class="beta-badge">Бета</span>
-                    </div>
-                </div>
-                <p class="footer-tagline">
-                    Мессенджер нового поколения с искусственным интеллектом, 
-                    продвинутой безопасностью и полностью адаптивным интерфейсом.
-                </p>
-                
-                <a href="#eventCard" class="update-button" id="eventButton">
-                    <i class="fas fa-rocket"></i> Следить за запуском
-                </a>
-                
-                <p class="copyright">
-                    © 2024-2026 Vaymessage Digital Ecosystem. Все права защищены.<br>
-                    Liquid Glass интерфейс • AI-оптимизация • Адаптация под все устройства
-                </p>
+        <div class="footer-logo">
+            <div style="width: 50px; height: 50px; border-radius: 12px; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-comment-alt"></i>
             </div>
+            Vaymessage
+            <span class="beta-badge">Бета</span>
         </div>
+        <p class="footer-tagline">
+            Мессенджер нового поколения с искусственным интеллектом, 
+            продвинутой безопасностью и полностью адаптивным интерфейсом.
+        </p>
+        
+        <a href="#eventContainer" class="update-button" id="showEventBtn">
+            <i class="fas fa-rocket"></i>
+            Следить за запуском
+        </a>
+        
+        <p class="copyright">
+            © 2024-2026 Vaymessage Digital Ecosystem. Все права защищены.<br>
+            Liquid Glass интерфейс • AI-оптимизация • Адаптация под все устройства
+        </p>
     </footer>
 
     <script>
-        // === ЭКРАН ОПТИМИЗАЦИИ (10 СЕКУНД) ===
-        document.addEventListener('DOMContentLoaded', function() {
-            const optimizationScreen = document.getElementById('optimizationScreen');
-            const optimizationMessage = document.getElementById('optimizationMessage');
-            const deviceInfo = document.getElementById('deviceInfo');
-            const optimizationTime = document.getElementById('optimizationTime');
+        // === ЭКРАН ЗАГРУЗКИ ===
+        const loadingScreen = document.getElementById('loadingScreen');
+        
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+        }, 10000);
+
+        // === ТАЙМЕР ОБРАТНОГО ОТСЧЕТА ===
+        function updateCountdown() {
+            const launchDate = new Date('July 1, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = launchDate - now;
             
-            // Статистика оптимизации
-            const cpuStat = document.getElementById('cpuStat');
-            const gpuStat = document.getElementById('gpuStat');
-            const ramStat = document.getElementById('ramStat');
-            const networkStat = document.getElementById('networkStat');
-            
-            let optimizationStartTime = Date.now();
-            let progressMessages = [
-                "Анализ устройства...",
-                "Определение разрешения экрана...",
-                "Оптимизация графики...",
-                "Настройка интерфейса...",
-                "Инициализация AI системы...",
-                "Настройка безопасности...",
-                "Загрузка адаптивных ресурсов...",
-                "Тестирование производительности...",
-                "Финальная оптимизация...",
-                "Vaymessage готов!"
-            ];
-            
-            let currentMessageIndex = 0;
-            let cpuProgress = 0;
-            let gpuProgress = 0;
-            let ramProgress = 0;
-            let networkProgress = 0;
-            
-            // Определение характеристик устройства
-            function detectDevice() {
-                const screenWidth = window.innerWidth;
-                const screenHeight = window.innerHeight;
-                const pixelRatio = window.devicePixelRatio || 1;
-                const isTouchDevice = 'ontouchstart' in window;
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                 
-                let deviceType = 'Десктоп';
-                if (screenWidth < 768) {
-                    deviceType = 'Смартфон';
-                } else if (screenWidth < 1024) {
-                    deviceType = 'Планшет';
-                }
-                
-                let performanceLevel = 'Высокое';
-                if (pixelRatio >= 3) {
-                    performanceLevel = 'Ультра';
-                } else if (pixelRatio >= 2) {
-                    performanceLevel = 'Высокое';
-                } else if (pixelRatio >= 1.5) {
-                    performanceLevel = 'Среднее';
-                } else {
-                    performanceLevel = 'Базовое';
-                }
-                
-                deviceInfo.textContent = `${deviceType} • ${screenWidth}×${screenHeight} • ${performanceLevel} качество`;
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
             }
-            
-            // Анимация прогресса
-            function updateOptimizationStats() {
-                const elapsedSeconds = Math.floor((Date.now() - optimizationStartTime) / 1000);
-                optimizationTime.textContent = `Время оптимизации: ${elapsedSeconds}s`;
-                
-                // Обновление сообщений
-                if (elapsedSeconds < 10) {
-                    const messageIndex = Math.floor(elapsedSeconds);
-                    if (messageIndex < progressMessages.length && messageIndex !== currentMessageIndex) {
-                        optimizationMessage.textContent = progressMessages[messageIndex];
-                        currentMessageIndex = messageIndex;
-                    }
-                }
-                
-                // Симуляция прогресса оптимизации
-                if (elapsedSeconds < 10) {
-                    cpuProgress = Math.min(100, (elapsedSeconds / 10) * 100 * 0.8 + Math.random() * 20);
-                    gpuProgress = Math.min(100, (elapsedSeconds / 10) * 100 * 0.7 + Math.random() * 30);
-                    ramProgress = Math.min(100, (elapsedSeconds / 10) * 100 * 0.9 + Math.random() * 10);
-                    networkProgress = Math.min(100, (elapsedSeconds / 10) * 100 * 0.6 + Math.random() * 40);
-                    
-                    cpuStat.textContent = Math.floor(cpuProgress) + '%';
-                    gpuStat.textContent = Math.floor(gpuProgress) + '%';
-                    ramStat.textContent = Math.floor(ramProgress) + '%';
-                    networkStat.textContent = Math.floor(networkProgress) + '%';
-                }
-            }
-            
-            // Запуск детекции устройства
-            detectDevice();
-            
-            // Запуск обновления статистики
-            const statsInterval = setInterval(updateOptimizationStats, 100);
-            
-            // Скрытие экрана оптимизации через 10 секунд
+        }
+
+        // Запуск таймера
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // === УПРАВЛЕНИЕ КАРТОЧКОЙ СОБЫТИЯ ===
+        const eventContainer = document.getElementById('eventContainer');
+        const eventClose = document.getElementById('eventClose');
+        const showEventBtn = document.getElementById('showEventBtn');
+
+        // Закрытие карточки
+        eventClose.addEventListener('click', () => {
+            eventContainer.style.opacity = '0';
+            eventContainer.style.transform = 'translateX(100px)';
             setTimeout(() => {
-                clearInterval(statsInterval);
-                
-                // Финальные значения
-                cpuStat.textContent = '100%';
-                gpuStat.textContent = '100%';
-                ramStat.textContent = '100%';
-                networkStat.textContent = '100%';
-                optimizationMessage.textContent = 'Vaymessage оптимизирован!';
-                optimizationTime.textContent = `Готово за 10 секунд`;
-                
-                // Скрытие экрана оптимизации
-                setTimeout(() => {
-                    optimizationScreen.classList.add('hidden');
-                    
-                    // Анимация появления контента
-                    setTimeout(() => {
-                        document.querySelectorAll('.fade-in').forEach(el => {
-                            el.classList.add('visible');
-                        });
-                    }, 300);
-                }, 1000);
-            }, 10000);
-            
-            // === ТАЙМЕР ОБРАТНОГО ОТСЧЕТА ===
-            function updateCountdown() {
-                const launchDate = new Date('July 1, 2026 00:00:00').getTime();
-                const now = new Date().getTime();
-                const timeLeft = launchDate - now;
-                
-                if (timeLeft > 0) {
-                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                    
-                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-                    
-                    // Анимация для секунд
-                    const secondsElement = document.getElementById('seconds');
-                    secondsElement.style.transform = 'scale(1.1)';
-                    setTimeout(() => {
-                        secondsElement.style.transform = 'scale(1)';
-                    }, 300);
-                } else {
-                    // Если время вышло
-                    document.querySelector('.countdown').innerHTML = '<div style="text-align: center; padding: 20px;"><h3 style="color: var(--success);">Vaymessage ЗАПУЩЕН!</h3><p>Добро пожаловать в новую эру общения!</p></div>';
-                }
+                eventContainer.style.display = 'none';
+            }, 300);
+        });
+
+        // Показ карточки по кнопке в футере
+        showEventBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            eventContainer.style.display = 'block';
+            setTimeout(() => {
+                eventContainer.style.opacity = '1';
+                eventContainer.style.transform = 'translateX(0)';
+            }, 10);
+        });
+
+        // Адаптация карточки для мобильных
+        function adaptEventCard() {
+            if (window.innerWidth <= 768) {
+                eventContainer.style.position = 'relative';
+                eventContainer.style.top = 'auto';
+                eventContainer.style.right = 'auto';
+                eventContainer.style.width = '100%';
+                eventContainer.style.maxWidth = '400px';
+                eventContainer.style.margin = '20px auto';
+            } else {
+                eventContainer.style.position = 'fixed';
+                eventContainer.style.top = '90px';
+                eventContainer.style.right = '20px';
+                eventContainer.style.width = '320px';
+                eventContainer.style.margin = '0';
             }
-            
-            // Запуск таймера
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-            
-            // === УПРАВЛЕНИЕ КАРТОЧКОЙ СОБЫТИЯ (ИСПРАВЛЕННАЯ) ===
-            const eventCard = document.getElementById('eventCard');
-            const eventClose = document.getElementById('eventClose');
-            const eventButton = document.getElementById('eventButton');
-            const eventToggleBtn = document.getElementById('eventToggleBtn');
-            
-            // Состояние карточки
-            let isEventCardVisible = true;
-            
-            // Функция показа/скрытия карточки
-            function toggleEventCard() {
-                if (isEventCardVisible) {
-                    eventCard.style.opacity = '0';
-                    eventCard.style.transform = window.innerWidth > 768 ? 'translateX(400px)' : 'translate(-50%, -50%) translateX(400px)';
-                    eventToggleBtn.innerHTML = '<i class="fas fa-rocket"></i>';
-                    eventToggleBtn.style.background = 'var(--gradient-primary)';
-                } else {
-                    eventCard.style.display = 'block';
-                    setTimeout(() => {
-                        eventCard.style.opacity = '1';
-                        eventCard.style.transform = window.innerWidth > 768 ? 'translateX(0)' : 'translate(-50%, -50%) translateX(0)';
-                    }, 10);
-                    eventToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
-                    eventToggleBtn.style.background = 'var(--gradient-accent)';
-                }
-                isEventCardVisible = !isEventCardVisible;
-            }
-            
-            // Закрытие карточки
-            eventClose.addEventListener('click', function() {
-                eventCard.style.opacity = '0';
-                eventCard.style.transform = window.innerWidth > 768 ? 'translateX(400px)' : 'translate(-50%, -50%) translateX(400px)';
-                eventToggleBtn.innerHTML = '<i class="fas fa-rocket"></i>';
-                eventToggleBtn.style.background = 'var(--gradient-primary)';
-                isEventCardVisible = false;
-                
-                setTimeout(() => {
-                    eventCard.style.display = 'none';
-                }, 500);
-            });
-            
-            // Открытие карточки по кнопке в футере
-            eventButton.addEventListener('click', function(e) {
+        }
+
+        // Инициализация и обработка ресайза
+        adaptEventCard();
+        window.addEventListener('resize', adaptEventCard);
+
+        // === ПЛАВНАЯ ПРОКРУТКА ===
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                eventCard.style.display = 'block';
-                setTimeout(() => {
-                    eventCard.style.opacity = '1';
-                    eventCard.style.transform = window.innerWidth > 768 ? 'translateX(0)' : 'translate(-50%, -50%) translateX(0)';
-                    eventToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
-                    eventToggleBtn.style.background = 'var(--gradient-accent)';
-                    isEventCardVisible = true;
-                }, 10);
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
                 
-                // Прокрутка к карточке на мобильных
-                if (window.innerWidth <= 768) {
-                    eventCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            });
-            
-            // Переключение карточки по кнопке в правом верхнем углу
-            eventToggleBtn.addEventListener('click', toggleEventCard);
-            
-            // Автоматическое скрытие карточки при прокрутке вниз
-            let lastScrollTop = 0;
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                // Прячем карточку при прокрутке вниз, показываем при прокрутке вверх
-                if (scrollTop > lastScrollTop && scrollTop > 100 && isEventCardVisible) {
-                    // Прокрутка вниз - скрываем карточку
-                    eventCard.style.opacity = '0.5';
-                    eventCard.style.transform = window.innerWidth > 768 ? 'translateX(20px)' : 'translate(-50%, -50%) translateX(20px)';
-                } else if (scrollTop < lastScrollTop && isEventCardVisible) {
-                    // Прокрутка вверх - показываем карточку полностью
-                    eventCard.style.opacity = '1';
-                    eventCard.style.transform = window.innerWidth > 768 ? 'translateX(0)' : 'translate(-50%, -50%) translateX(0)';
-                }
-                
-                lastScrollTop = scrollTop;
-            });
-            
-            // === МОБИЛЬНОЕ МЕНЮ ===
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            
-            if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    mobileMenu.classList.add('active');
-                });
-                
-                mobileMenuClose.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                });
-                
-                // Закрытие меню при клике на ссылку
-                mobileMenu.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileMenu.classList.remove('active');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
                     });
-                });
-            }
-            
-            // === АДАПТАЦИЯ ПРИ ИЗМЕНЕНИИ РАЗМЕРА ОКНА ===
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function() {
-                    detectDevice();
-                    
-                    // Обновление позиции карточки при изменении размера окна
-                    if (isEventCardVisible) {
-                        eventCard.style.transform = window.innerWidth > 768 ? 'translateX(0)' : 'translate(-50%, -50%) translateX(0)';
-                    }
-                }, 250);
-            });
-            
-            // === ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ ===
-            // Плавная прокрутка
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if(targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if(targetElement) {
-                        e.preventDefault();
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Анимация появления элементов при скролле
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // Эффект для header при скролле
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('header');
-                const scrolled = window.pageYOffset;
-                
-                if (scrolled > 100) {
-                    header.style.background = 'rgba(0, 0, 0, 0.95)';
-                    header.style.backdropFilter = 'blur(30px)';
-                } else {
-                    header.style.background = 'rgba(0, 0, 0, 0.9)';
-                    header.style.backdropFilter = 'blur(20px)';
                 }
-            });
-            
-            // Эффект волны при клике
-            document.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A' || e.target.closest('a')) return;
-                
-                const ripple = document.createElement('div');
-                ripple.style.position = 'fixed';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'radial-gradient(circle, rgba(94, 92, 230, 0.2) 0%, transparent 70%)';
-                ripple.style.pointerEvents = 'none';
-                ripple.style.zIndex = '999';
-                ripple.style.left = e.clientX + 'px';
-                ripple.style.top = e.clientY + 'px';
-                ripple.style.width = '0';
-                ripple.style.height = '0';
-                ripple.style.transform = 'translate(-50%, -50%)';
-                
-                document.body.appendChild(ripple);
-                
-                const size = Math.random() * 150 + 100;
-                
-                ripple.animate([
-                    { width: '0px', height: '0px', opacity: 1 },
-                    { width: size + 'px', height: size + 'px', opacity: 0 }
-                ], {
-                    duration: 600,
-                    easing: 'ease-out'
-                });
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
             });
         });
+
+        // === ПРОСТОЙ МОБИЛЬНЫЙ МЕНЮ ===
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                if (navLinks.style.display === 'flex') {
+                    navLinks.style.display = 'none';
+                } else {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'fixed';
+                    navLinks.style.top = '80px';
+                    navLinks.style.right = '20px';
+                    navLinks.style.background = 'rgba(0, 0, 0, 0.95)';
+                    navLinks.style.backdropFilter = 'blur(20px)';
+                    navLinks.style.padding = '20px';
+                    navLinks.style.borderRadius = '12px';
+                    navLinks.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                }
+            });
+            
+            // Закрытие меню при клике на ссылку
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.style.display = 'none';
+                });
+            });
+        }
     </script>
 </body>
 </html>
