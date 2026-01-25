@@ -1,16 +1,12 @@
 {
-  "version": "0.1.0-beta",
-  "date": "2026-01-22",
-  "title": "Первый публичный Beta-релиз",
+  "version": "1.0",
+  "date": "01.07.2026",
+  "title": "Первая версия VAYMessage",
   "changes": [
-    "Добавлен VAY ID для единого входа",
-    "Сверхплавные анимации (оптимизация до 200%)",
-    "Авто-оптимизация под устройство при запуске",
-    "VAY FAST ID — быстрый вход между сервисами",
-    "Подготовка системы восстановления версии"
+    "- первая версия"
   ],
   "download": {
-    "android": "https://example.com/vaymessage.apk",
-    "windows": "https://example.com/vaymessage.exe"
+    "android": "",
+    "windows": ""
   }
 }
