@@ -2,261 +2,74 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<title>VAYMESSAGE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAY MESSAGE</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body{
+margin:0;
+font-family:Inter,sans-serif;
+background:#000;
+color:#fff;
+overflow-x:hidden;
 }
-
-:root {
-  --bg: #050505;
-  --glass: rgba(255,255,255,0.08);
-  --border: rgba(255,255,255,0.12);
-  --text: #fff;
-  --muted: rgba(255,255,255,0.6);
-  --primary: linear-gradient(135deg,#5e5ce6,#0a84ff);
+header{
+position:fixed;
+top:0;
+width:100%;
+padding:20px;
+backdrop-filter:blur(20px);
+background:rgba(0,0,0,.6);
+border-bottom:1px solid rgba(255,255,255,.1);
+z-index:10;
 }
-
-html, body {
-  font-family: Inter, system-ui;
-  background: var(--bg);
-  color: var(--text);
-  height: 100%;
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:120px 20px;
 }
-
-/* ===== BLUR BACKGROUND ===== */
-.bg-blur {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, #5e5ce633, transparent 40%),
-    radial-gradient(circle at 80% 80%, #0a84ff33, transparent 40%);
-  filter: blur(120px);
-  z-index: -1;
+h1{
+font-size:3.5rem;
+background:linear-gradient(135deg,#5E5CE6,#0A84FF);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
-
-/* ===== HEADER ===== */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  backdrop-filter: blur(20px);
-  background: rgba(0,0,0,0.6);
-  border-bottom: 1px solid var(--border);
-  z-index: 10;
+p{
+color:rgba(255,255,255,.7);
+font-size:1.2rem;
 }
-
-.nav {
-  max-width: 1200px;
-  margin: auto;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: 900;
-  font-size: 22px;
-}
-
-.admin-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.admin-btn:hover {
-  background: var(--glass);
-}
-
-/* ===== HERO ===== */
-.hero {
-  min-height: 100vh;
-  padding: 140px 20px 80px;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: clamp(36px, 8vw, 72px);
-  font-weight: 900;
-  background: var(--primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero p {
-  margin-top: 20px;
-  color: var(--muted);
-  font-size: 18px;
-}
-
-/* ===== GLASS CARD ===== */
-.card {
-  margin: 60px auto;
-  max-width: 900px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(24px);
-  border-radius: 24px;
-  padding: 40px;
-  animation: fadeUp 1s ease;
-}
-
-@keyframes fadeUp {
-  from {opacity:0; transform: translateY(30px);}
-  to {opacity:1; transform:none;}
-}
-
-/* ===== ADMIN PANEL ===== */
-.hidden { display: none; }
-
-.admin-panel {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-}
-
-.admin-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(16px);
-}
-
-.admin-box {
-  position: relative;
-  margin: 10vh auto;
-  width: 90%;
-  max-width: 420px;
-  background: rgba(20,20,20,0.95);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 30px;
-}
-
-.admin-box h2 {
-  margin-bottom: 20px;
-}
-
-.admin-box input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 16px;
-  border-radius: 12px;
-  border: none;
-  background: #111;
-  color: white;
-}
-
-.admin-box button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  background: var(--primary);
-  color: white;
-  font-weight: 600;
-}
-
-.admin-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--muted);
+.admin-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+padding:14px 20px;
+border-radius:16px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.15);
+color:white;
+text-decoration:none;
+font-weight:600;
 }
 </style>
 </head>
-
 <body>
 
-<div class="bg-blur"></div>
-
 <header>
-  <div class="nav">
-    <div class="logo">VAY MESSAGE</div>
-    <button class="admin-btn" id="openAdmin">Администратор</button>
-  </div>
+<strong>VAYMESSAGE</strong>
 </header>
 
 <section class="hero">
-  <h1>Мессенджер будущего</h1>
-  <p>Blur-дизайн · AI · безопасность · плавность</p>
-
-  <div class="card">
-    <h2>Почему VAY MESSAGE?</h2>
-    <p style="margin-top:12px;color:var(--muted)">
-      Один аккаунт. Все устройства. Максимальная плавность и восстановление системы.
-    </p>
-  </div>
+<div>
+<h1>VAYMESSAGE</h1>
+<p>Умный мессенджер нового поколения</p>
+</div>
 </section>
 
-<footer>
-  © 2026 VAY ECOSYSTEM
-</footer>
-
-<!-- ===== ADMIN PANEL ===== -->
-<div class="admin-panel hidden" id="adminPanel">
-  <div class="admin-overlay"></div>
-
-  <div class="admin-box">
-    <button class="admin-close" id="closeAdmin">✕</button>
-    <h2>Админ вход</h2>
-    <input type="password" id="adminPass" placeholder="Пароль">
-    <button id="loginAdmin">Войти</button>
-  </div>
-</div>
-
-<script>
-const adminPanel = document.getElementById('adminPanel');
-const openAdmin = document.getElementById('openAdmin');
-const closeAdmin = document.getElementById('closeAdmin');
-const loginAdmin = document.getElementById('loginAdmin');
-const adminPass = document.getElementById('adminPass');
-
-openAdmin.onclick = () => adminPanel.classList.remove('hidden');
-closeAdmin.onclick = () => adminPanel.classList.add('hidden');
-
-loginAdmin.onclick = () => {
-  if (adminPass.value === 'admin123') {
-    alert('Добро пожаловать в админку');
-    adminPanel.classList.add('hidden');
-  } else {
-    alert('Неверный пароль');
-  }
-};
-</script>
+<a href="admin.html" class="admin-btn">⚙ Админ</a>
 
 </body>
 </html>
-<script>
-fetch('updates.json')
-  .then(r => r.json())
-  .then(data => {
-    console.log('Последняя версия:', data.latest_version);
-    console.log('Что нового:', data.changelog[0].changes);
-  })
-  .catch(() => console.log('Не удалось загрузить updates.json'));
-</script>
