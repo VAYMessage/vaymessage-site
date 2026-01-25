@@ -251,3 +251,12 @@ loginAdmin.onclick = () => {
 
 </body>
 </html>
+<script>
+fetch('updates.json')
+  .then(r => r.json())
+  .then(data => {
+    console.log('Последняя версия:', data.latest_version);
+    console.log('Что нового:', data.changelog[0].changes);
+  })
+  .catch(() => console.log('Не удалось загрузить updates.json'));
+</script>
