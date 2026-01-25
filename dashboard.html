@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>VAY Admin Panel</title>
+<style>
+body {
+  background:#050505;
+  color:#fff;
+  font-family:Inter;
+  padding:40px;
+}
+.card {
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  padding:30px;
+  border-radius:20px;
+  max-width:600px;
+}
+</style>
+</head>
+<body>
+
+<h1>Админ-панель VAY</h1>
+
+<div class="card">
+  <h3>Обновления</h3>
+  <p>Файл: updates.json</p>
+  <p>Редактируй вручную через GitHub</p>
+</div>
+
+<div class="card" style="margin-top:20px">
+  <h3>Файлы</h3>
+  <p>Загружай билды в папку <code>/assets/files</code></p>
+</div>
+
+<button onclick="logout()" style="margin-top:30px">Выйти</button>
+
+<script>
+function logout(){
+  location.href="index.html";
+}
+</script>
+
+</body>
+</html>
