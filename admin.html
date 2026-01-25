@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>VAY ADMIN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div id="login" class="glass">
+<h1>VAY ADMIN</h1>
+<input type="password" id="pass" placeholder="Пароль">
+<button onclick="login()">Войти</button>
+<p id="err"></p>
+</div>
+
+<div id="panel" class="hidden">
+<header>
+<h2>Админ панель</h2>
+<button onclick="logout()">Выйти</button>
+</header>
+
+<section class="glass">
+<h3>Новое обновление</h3>
+<input id="version" placeholder="Версия">
+<input id="date" placeholder="Дата">
+<textarea id="changes" placeholder="Изменения (с новой строки)"></textarea>
+<button onclick="gen()">Сгенерировать</button>
+</section>
+
+<section class="glass">
+<h3>updates.json</h3>
+<pre id="out"></pre>
+</section>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
