@@ -139,6 +139,26 @@ download:{android:a.value,windows:w.value}
 out.value=JSON.stringify(json,null,2)
 }
 </script>
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="admin-panel hidden">
+  <div class="admin-overlay"></div>
 
+  <div class="admin-window">
+    <button id="adminClose" class="admin-close">✕</button>
+
+    <h2>Админ панель</h2>
+
+    <input type="password" id="adminPassword" placeholder="Пароль администратора">
+
+    <button id="adminLoginBtn">Войти</button>
+
+    <div id="adminContent" class="hidden">
+      <hr>
+      <p>Загрузка обновлений</p>
+      <input type="file">
+      <button>Опубликовать</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
