@@ -2,14 +2,28 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Vaymessage — Умный мессенджер будущего</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Vaymessage — Мессенджер будущего с AI и максимальной безопасностью</title>
+    <meta name="description" content="Первый полностью адаптивный мессенджер с искусственным интеллектом, продвинутой безопасностью и интерфейсом нового поколения">
+    
+    <!-- Предзагрузка критических ресурсов -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@300;400;500;600;700&display=swap" as="style">
+    
+    <!-- Шрифты и иконки -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ === */
+        /* === КРИТИЧЕСКИЕ СТИЛИ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             /* Цветовая система */
             --primary: #5E5CE6;
@@ -17,34 +31,21 @@
             --secondary: #32D74B;
             --accent: #FF375F;
             --warning: #FF9F0A;
-            --danger: #FF453A;
             --success: #30D158;
             --info: #64D2FF;
             
             /* Градиенты */
-            --gradient-primary: linear-gradient(135deg, #5E5CE6, #0A84FF);
-            --gradient-secondary: linear-gradient(135deg, #32D74B, #64D2FF);
-            --gradient-accent: linear-gradient(135deg, #FF375F, #FF9F0A);
-            --gradient-system: linear-gradient(135deg, #5E5CE6, #BF5AF2);
-            --gradient-neon: linear-gradient(135deg, #5E5CE6, #FF375F, #FF9F0A);
-            --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            
-            /* Адаптивные переменные */
-            --base-font-size: clamp(14px, 2vw, 20px);
-            --scale-factor: 1;
-            --screen-width: 100vw;
-            --screen-height: 100vh;
+            --gradient-primary: linear-gradient(135deg, #5E5CE6 0%, #0A84FF 100%);
+            --gradient-secondary: linear-gradient(135deg, #32D74B 0%, #64D2FF 100%);
+            --gradient-accent: linear-gradient(135deg, #FF375F 0%, #FF9F0A 100%);
+            --gradient-system: linear-gradient(135deg, #5E5CE6 0%, #BF5AF2 100%);
+            --gradient-dark: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(10,10,10,0.9) 100%);
             
             /* Фоны */
             --bg-primary: #000000;
             --bg-secondary: #0A0A0A;
-            --bg-card: rgba(255, 255, 255, 0.05);
-            --bg-glass: rgba(255, 255, 255, 0.08);
-            --bg-hologram: linear-gradient(135deg, 
-                rgba(94, 92, 230, 0.1), 
-                rgba(50, 215, 75, 0.1), 
-                rgba(255, 55, 95, 0.1)
-            );
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --bg-glass-hover: rgba(255, 255, 255, 0.1);
             
             /* Текст */
             --text-primary: #FFFFFF;
@@ -52,35 +53,26 @@
             --text-tertiary: rgba(255, 255, 255, 0.5);
             
             /* Эффекты */
-            --glass-blur: 30px;
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            --neon-glow: 0 0 30px rgba(94, 92, 230, 0.4);
-            --neon-glow-accent: 0 0 40px rgba(255, 55, 95, 0.4);
+            --glass-blur: blur(20px);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --neon-glow: 0 0 20px rgba(94, 92, 230, 0.3);
             
             /* Анимации */
-            --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            --transition-elastic: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             
-            /* Z-индексы */
-            --z-loader: 9999;
-            --z-event: 1000;
-            --z-nav: 900;
-            --z-particles: 100;
+            /* Размеры */
+            --header-height: 80px;
+            --container-padding: max(20px, 5vw);
         }
 
-        /* === СБРОС И БАЗОВЫЕ СТИЛИ === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* === БАЗОВЫЕ СТИЛИ === */
         html {
-            font-size: var(--base-font-size);
+            font-size: clamp(14px, 2vw, 18px);
             scroll-behavior: smooth;
-            scroll-padding-top: 100px;
+            scroll-padding-top: var(--header-height);
             overflow-x: hidden;
         }
 
@@ -90,45 +82,23 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
             min-height: 100vh;
-            opacity: 0;
-            animation: bodyAppear 0.8s ease forwards 1.5s;
+            position: relative;
         }
 
-        @keyframes bodyAppear {
-            to { opacity: 1; }
+        /* === ОПТИМИЗАЦИЯ АНИМАЦИЙ === */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
-        /* === ПАРТИКЛЫ НА ФОНЕ === */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: var(--z-particles);
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            filter: blur(20px);
-            opacity: 0.3;
-            animation: floatParticle 20s infinite linear;
-        }
-
-        @keyframes floatParticle {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, 100px) rotate(90deg); }
-            50% { transform: translate(200px, -50px) rotate(180deg); }
-            75% { transform: translate(-100px, 150px) rotate(270deg); }
-        }
-
-        /* === ЭКРАН ЗАГРУЗКИ (3 СЕКУНДЫ) === */
-        .loader {
+        /* === ЭКРАН ЗАГРУЗКИ === */
+        .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
@@ -139,109 +109,84 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: var(--z-loader);
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
-        .loader.hidden {
+        .loading-screen.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
 
-        .loader-hologram {
+        .loading-gradient {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: min(400px, 90vw);
-            height: min(400px, 90vw);
-            background: var(--bg-hologram);
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.5;
-            animation: hologramPulse 4s infinite ease-in-out;
+            width: min(400px, 80vw);
+            height: min(400px, 80vw);
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            filter: blur(40px);
         }
 
-        @keyframes hologramPulse {
-            0%, 100% { 
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.3;
-            }
-            50% { 
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0.6;
-            }
-        }
-
-        .loader-logo {
-            width: clamp(100px, 25vw, 200px);
-            height: clamp(100px, 25vw, 200px);
-            border-radius: 30px;
+        .loading-logo {
+            width: clamp(80px, 20vw, 120px);
+            height: clamp(80px, 20vw, 120px);
+            border-radius: 24px;
             background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: clamp(2rem, 5vw, 3rem);
             margin-bottom: clamp(20px, 5vw, 40px);
             position: relative;
-            z-index: 2;
-            animation: 
-                logoFloat 3s infinite ease-in-out,
-                logoRotate 20s infinite linear;
-            box-shadow: 
-                0 0 60px rgba(94, 92, 230, 0.5),
-                inset 0 0 40px rgba(255, 255, 255, 0.2);
+            z-index: 1;
+            animation: logoFloat 3s ease-in-out infinite;
         }
 
-        @keyframes logoRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(5deg); }
+            66% { transform: translateY(5px) rotate(-5deg); }
         }
 
-        .loader-text {
-            font-size: clamp(1.2rem, 4vw, 2rem);
+        .loading-text {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 600;
-            margin-bottom: clamp(20px, 5vw, 40px);
-            text-align: center;
-            position: relative;
-            z-index: 2;
+            margin-bottom: 30px;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: textGlow 2s infinite alternate;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 10px rgba(94, 92, 230, 0.3)); }
-            to { filter: drop-shadow(0 0 20px rgba(94, 92, 230, 0.6)); }
-        }
-
-        .loader-progress {
-            width: min(400px, 80vw);
-            height: 8px;
+        .loading-bar {
+            width: min(300px, 80vw);
+            height: 4px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 2px;
             overflow: hidden;
             position: relative;
-            z-index: 2;
-            margin-bottom: 30px;
+            z-index: 1;
         }
 
-        .loader-progress-bar {
+        .loading-progress {
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 0%;
             background: var(--gradient-primary);
-            border-radius: 4px;
-            animation: loadProgress 3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            box-shadow: 0 0 20px rgba(94, 92, 230, 0.5);
+            border-radius: 2px;
+            animation: loadingProgress 2s ease-out forwards;
         }
 
-        @keyframes loadProgress {
+        @keyframes loadingProgress {
             0% { width: 0%; }
             20% { width: 15%; }
             40% { width: 35%; }
@@ -250,157 +195,259 @@
             100% { width: 100%; }
         }
 
-        .loader-stats {
+        /* === ШАПКА === */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: var(--glass-border);
+            z-index: 1000;
+            transition: var(--transition-normal);
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+            height: 100%;
             display: flex;
-            gap: clamp(15px, 4vw, 30px);
-            color: var(--text-secondary);
-            font-size: clamp(0.8rem, 2vw, 1rem);
-            position: relative;
-            z-index: 2;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
             justify-content: center;
+            font-size: 1.2rem;
         }
 
-        .loader-stat {
-            text-align: center;
-            min-width: 80px;
+        .logo-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .loader-stat-number {
-            font-size: clamp(1rem, 3vw, 1.5rem);
+        .beta-badge {
+            padding: 4px 12px;
+            background: rgba(255, 159, 10, 0.1);
+            border: 2px solid rgba(255, 159, 10, 0.3);
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
+            color: var(--warning);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(20px, 3vw, 40px);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            position: relative;
+            padding: 8px 0;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: var(--transition-normal);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-glass);
+        }
+
+        /* === МОБИЛЬНОЕ МЕНЮ === */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(320px, 85vw);
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: var(--glass-blur);
+            padding: calc(var(--header-height) + 40px) 30px 40px;
+            transition: var(--transition-normal);
+            z-index: 999;
+            border-left: var(--glass-border);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .nav-link {
+            display: block;
+            padding: 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: var(--transition-fast);
+        }
+
+        .mobile-menu-close:hover {
+            color: var(--text-primary);
+            background: var(--bg-glass);
         }
 
         /* === КАРТОЧКА СОБЫТИЯ === */
-        .event-card {
+        .event-container {
             position: fixed;
-            top: min(120px, 15vh);
-            right: min(20px, 3vw);
-            z-index: var(--z-event);
-            width: min(350px, 90vw);
-            padding: 25px;
-            border-radius: 24px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 30px 60px -12px rgba(0, 0, 0, 0.6),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                var(--neon-glow);
-            animation: 
-                eventSlideIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-                eventGlow 3s infinite alternate;
-            transform: translateX(400px) rotateY(90deg);
-            transform-origin: right center;
-            opacity: 0;
+            top: calc(var(--header-height) + 20px);
+            right: 20px;
+            z-index: 900;
+            width: min(320px, 90vw);
+            max-height: calc(100vh - var(--header-height) - 40px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         @media (max-width: 768px) {
-            .event-card {
+            .event-container {
                 position: relative;
                 top: auto;
                 right: auto;
-                width: calc(100% - 40px);
-                margin: 40px auto;
+                width: 100%;
                 max-width: 400px;
-                animation: 
-                    eventSlideInMobile 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-                    eventGlow 3s infinite alternate;
+                margin: 20px auto;
+                max-height: none;
             }
         }
 
-        @keyframes eventSlideIn {
+        .event-card {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--glass-shadow);
+            animation: slideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transform: translateX(100px);
+            opacity: 0;
+        }
+
+        @keyframes slideIn {
             to {
-                transform: translateX(0) rotateY(0deg);
+                transform: translateX(0);
                 opacity: 1;
-            }
-        }
-
-        @keyframes eventSlideInMobile {
-            from {
-                transform: translateY(100px) scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes eventGlow {
-            from { box-shadow: 
-                    0 30px 60px -12px rgba(0, 0, 0, 0.6),
-                    0 0 0 1px rgba(255, 255, 255, 0.1),
-                    var(--neon-glow);
-            }
-            to { box-shadow: 
-                    0 30px 60px -12px rgba(0, 0, 0, 0.6),
-                    0 0 0 1px rgba(255, 255, 255, 0.1),
-                    0 0 50px rgba(94, 92, 230, 0.6);
             }
         }
 
         .event-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            align-items: center;
+            margin-bottom: 16px;
         }
 
         .event-title {
-            font-size: 1.4rem;
-            font-weight: 800;
+            font-size: 1.3rem;
+            font-weight: 700;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
 
         .event-badge {
-            padding: 6px 15px;
+            padding: 6px 12px;
             background: var(--gradient-accent);
             border-radius: 12px;
             font-size: 0.8rem;
-            font-weight: 800;
+            font-weight: 700;
             color: white;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: badgePulse 2s infinite ease-in-out;
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         .event-date {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .event-date i {
-            color: var(--warning);
-            animation: iconSpin 10s infinite linear;
-        }
-
-        @keyframes iconSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            gap: 8px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         .countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin: 20px 0;
         }
 
         @media (max-width: 480px) {
@@ -412,562 +459,186 @@
         .countdown-item {
             text-align: center;
             padding: 15px 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition-bounce);
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-glass);
+            border-radius: 12px;
+            border: var(--glass-border);
+            transition: var(--transition-fast);
         }
 
         .countdown-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(94, 92, 230, 0.3);
-        }
-
-        .countdown-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .countdown-item:hover::before {
-            left: 100%;
+            background: var(--bg-glass-hover);
+            transform: translateY(-2px);
         }
 
         .countdown-number {
-            font-size: 2rem;
-            font-weight: 900;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-family: 'SF Pro Rounded', sans-serif;
-            text-shadow: 0 0 20px rgba(94, 92, 230, 0.5);
         }
 
         .countdown-label {
             font-size: 0.7rem;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
+            letter-spacing: 1px;
         }
 
         .event-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            top: 12px;
+            right: 12px;
+            background: var(--bg-glass);
             border: none;
-            color: var(--text-tertiary);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
+            color: var(--text-tertiary);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
+            transition: var(--transition-fast);
         }
 
         .event-close:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg) scale(1.1);
-        }
-
-        /* === БЕТА-БЕЙДЖ === */
-        .beta-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 12px;
-            padding: 5px 14px;
-            font-size: 0.7rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            color: #FF9F0A;
-            background: rgba(255, 159, 10, 0.15);
-            border: 2px solid rgba(255, 159, 10, 0.5);
-            border-radius: 14px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-            animation: 
-                betaPulse 3s infinite ease-in-out,
-                betaShine 6s infinite linear;
-            box-shadow: 
-                0 0 25px rgba(255, 159, 10, 0.3),
-                inset 0 0 15px rgba(255, 255, 255, 0.1);
-        }
-
-        @keyframes betaPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes betaShine {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-
-        /* === ОСНОВНОЙ КОНТЕНТ === */
-        .glass {
-            background: var(--gradient-glass);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-        }
-
-        section {
-            padding: clamp(80px, 15vh, 200px) 5vw;
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        section:nth-child(even) {
-            background: linear-gradient(135deg, 
-                rgba(10, 10, 10, 0.8) 0%,
-                rgba(0, 0, 0, 1) 100%
-            );
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'SF Pro Rounded', -apple-system, sans-serif;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.5px;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            margin-bottom: 1.5rem;
-            background: var(--gradient-neon);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textShimmer 3s infinite linear;
-            background-size: 200% auto;
-        }
-
-        @keyframes textShimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        h2 {
-            font-size: clamp(2rem, 6vw, 4rem);
-            margin-bottom: 2rem;
-        }
-
-        h3 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            margin-bottom: 1rem;
-        }
-
-        p {
-            color: var(--text-secondary);
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-            line-height: 1.7;
-        }
-
-        .section-subtitle {
-            color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1rem;
-            display: inline-block;
-            font-size: 0.9rem;
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .section-subtitle::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 30px;
-            height: 2px;
-            background: var(--gradient-primary);
-            transform: translateY(-50%);
-        }
-
-        /* Навигация */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: var(--z-nav);
-            padding: 20px 0;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            background: rgba(0, 0, 0, 0.7);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        header.scrolled {
-            padding: 15px 0;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5vw;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            font-weight: 900;
-            color: white;
-            text-decoration: none;
-            font-family: 'SF Pro Rounded', sans-serif;
-            transition: var(--transition-smooth);
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-icon {
-            width: clamp(40px, 8vw, 60px);
-            height: clamp(40px, 8vw, 60px);
-            border-radius: 18px;
-            background: var(--gradient-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            animation: logoGlow 2s infinite alternate;
-        }
-
-        @keyframes logoGlow {
-            from { box-shadow: 0 0 20px rgba(94, 92, 230, 0.5); }
-            to { box-shadow: 0 0 40px rgba(94, 92, 230, 0.8); }
-        }
-
-        .logo-text {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .vay {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 900;
-        }
-
-        .message {
-            color: var(--text-primary);
-            font-weight: 400;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: min(40px, 2vw);
-            flex-wrap: wrap;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block !important;
-            }
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            position: relative;
-            padding: 8px 0;
-            font-size: 1rem;
-            white-space: nowrap;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient-primary);
-            transition: var(--transition-smooth);
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .nav-link:hover::before {
-            width: 100%;
-        }
-
-        /* Мобильное меню */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 10px;
-            transition: var(--transition-smooth);
-        }
-
-        .mobile-menu-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--bg-glass-hover);
             color: var(--text-primary);
             transform: rotate(90deg);
         }
 
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: min(350px, 85vw);
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(50px);
-            -webkit-backdrop-filter: blur(50px);
-            padding: 100px 40px;
-            transition: var(--transition-elastic);
-            z-index: 1001;
-            border-left: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-menu .nav-link {
-            display: block;
-            padding: 20px 0;
-            font-size: 1.4rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            animation: menuItemSlide 0.5s ease forwards;
-            opacity: 0;
-            transform: translateX(50px);
-        }
-
-        .mobile-menu .nav-link:nth-child(1) { animation-delay: 0.1s; }
-        .mobile-menu .nav-link:nth-child(2) { animation-delay: 0.2s; }
-        .mobile-menu .nav-link:nth-child(3) { animation-delay: 0.3s; }
-        .mobile-menu .nav-link:nth-child(4) { animation-delay: 0.4s; }
-        .mobile-menu .nav-link:nth-child(5) { animation-delay: 0.5s; }
-        .mobile-menu .nav-link:nth-child(6) { animation-delay: 0.6s; }
-
-        @keyframes menuItemSlide {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .mobile-menu-close {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 12px;
-            border-radius: 50%;
-            transition: var(--transition-smooth);
-        }
-
-        .mobile-menu-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
-            transform: rotate(180deg);
-        }
-
-        /* Герой секция */
-        .hero {
+        /* === ОСНОВНЫЕ СЕКЦИИ === */
+        section {
             min-height: 100vh;
+            padding: calc(var(--header-height) + 40px) var(--container-padding) 80px;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding-top: 100px;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        section:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(94, 92, 230, 0.2) 0%, transparent 50%),
-                       radial-gradient(circle at 70% 70%, rgba(255, 55, 95, 0.15) 0%, transparent 50%);
-            animation: heroBgFloat 20s infinite ease-in-out;
-        }
-
-        @keyframes heroBgFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-50px, 50px) scale(0.9); }
-        }
-
-        .hero-content {
-            max-width: 800px;
             position: relative;
             z-index: 1;
         }
 
-        .hero-tagline {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-            font-weight: 300;
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .hero-highlight {
-            background: var(--gradient-secondary);
+        .section-subtitle {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .section-description {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* === ГЕРОЙ СЕКЦИЯ === */
+        .hero {
+            text-align: center;
+            background: var(--gradient-dark);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
         }
 
-        .update-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 28px;
-            background: rgba(94, 92, 230, 0.15);
-            border: 1px solid rgba(94, 92, 230, 0.4);
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            color: var(--primary);
-            backdrop-filter: blur(10px);
-            animation: badgeFloat 4s infinite ease-in-out;
+        .hero-description {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
         }
 
-        @keyframes badgeFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Карточки функций */
+        /* === КАРТОЧКИ ФУНКЦИЙ === */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 60px;
+            margin-top: 40px;
         }
 
         .feature-card {
+            background: var(--bg-glass);
+            backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            border-radius: 20px;
             padding: 40px 30px;
-            border-radius: 28px;
-            transition: var(--transition-bounce);
+            transition: var(--transition-normal);
             height: 100%;
             position: relative;
             overflow: hidden;
-            min-height: 300px;
-            cursor: pointer;
         }
 
         .feature-card:hover {
-            transform: translateY(-15px) scale(1.02);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.8s ease;
-        }
-
-        .feature-card:hover::before {
-            left: 100%;
+            transform: translateY(-10px);
+            background: var(--bg-glass-hover);
+            box-shadow: var(--neon-glow);
         }
 
         .feature-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
-            font-size: 2rem;
-            background: var(--gradient-primary);
+            font-size: 1.8rem;
             color: white;
-            transition: var(--transition-bounce);
+            margin-bottom: 24px;
+            transition: var(--transition-normal);
         }
 
         .feature-card:hover .feature-icon {
-            transform: rotateY(180deg) scale(1.2);
+            transform: scale(1.1) rotate(5deg);
         }
 
-        .feature-number {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 4rem;
-            font-weight: 900;
-            opacity: 0.05;
-            color: white;
-            font-family: 'SF Pro Rounded', sans-serif;
-            transition: var(--transition-smooth);
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
         }
 
-        .feature-card:hover .feature-number {
-            opacity: 0.1;
-            transform: scale(1.2);
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
         }
 
-        /* Демо безопасности */
+        /* === ДЕМО БЕЗОПАСНОСТИ === */
         .security-demo {
             display: flex;
             gap: 60px;
@@ -978,264 +649,131 @@
 
         .security-visual {
             flex: 1;
+            min-width: 300px;
             position: relative;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: min(350px, 100%);
+            height: 300px;
         }
 
         .security-shield {
-            width: 250px;
-            height: 250px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            animation: 
-                shieldPulse 3s infinite ease-in-out,
-                shieldRotate 20s infinite linear;
-            box-shadow: 
-                0 0 60px rgba(94, 92, 230, 0.5),
-                inset 0 0 40px rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes shieldRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: shieldPulse 3s ease-in-out infinite;
         }
 
         .security-shield i {
-            font-size: 4rem;
+            font-size: 3rem;
             color: white;
-            animation: iconFloat 2s infinite ease-in-out;
         }
 
-        .threat-indicator {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gradient-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: threatFloat 4s infinite ease-in-out;
-            box-shadow: 0 0 30px rgba(255, 55, 95, 0.5);
+        @keyframes shieldPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
         }
 
-        .threat-indicator:nth-child(2) {
-            top: 20%;
-            left: 20%;
-            animation-delay: 0.5s;
+        .security-content {
+            flex: 1;
+            min-width: 300px;
         }
 
-        .threat-indicator:nth-child(3) {
-            bottom: 20%;
-            right: 20%;
-            animation-delay: 1s;
-        }
-
-        /* Сервисы Vaymessage */
+        /* === СЕРВИСЫ === */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin-top: 60px;
+            margin-top: 40px;
         }
 
         .service-card {
-            padding: 50px 30px;
-            border-radius: 28px;
             text-align: center;
-            transition: var(--transition-bounce);
-            min-height: 350px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            padding: 40px 30px;
+            border-radius: 20px;
+            background: var(--bg-glass);
+            border: var(--glass-border);
+            transition: var(--transition-normal);
         }
 
         .service-card:hover {
-            transform: translateY(-20px) scale(1.05);
+            transform: translateY(-5px);
+            background: var(--bg-glass-hover);
         }
 
         .service-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 25px;
-            margin: 0 auto 30px;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin: 0 auto 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: white;
-            transition: var(--transition-bounce);
-            position: relative;
         }
 
-        .service-card:hover .service-icon {
-            transform: rotateY(360deg) scale(1.2);
-        }
+        .service-cloud .service-icon { background: var(--gradient-system); }
+        .service-office .service-icon { background: var(--gradient-primary); }
+        .service-music .service-icon { background: var(--gradient-secondary); }
+        .service-video .service-icon { background: var(--gradient-accent); }
 
-        .service-icon::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border-radius: 35px;
-            background: inherit;
-            filter: blur(20px);
-            opacity: 0.5;
-            z-index: -1;
-        }
-
-        .service-cloud .service-icon {
-            background: var(--gradient-system);
-        }
-
-        .service-office .service-icon {
-            background: var(--gradient-primary);
-        }
-
-        .service-music .service-icon {
-            background: var(--gradient-secondary);
-        }
-
-        .service-video .service-icon {
-            background: var(--gradient-accent);
-        }
-
-        /* Оптимизация секция */
-        .devices-showcase {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            margin-top: 60px;
-            flex-wrap: wrap;
-        }
-
-        .device {
-            width: 200px;
-            height: 400px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: deviceFloat 6s infinite ease-in-out;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .device:nth-child(1) {
-            animation-delay: 0s;
-            background: var(--gradient-primary);
-        }
-
-        .device:nth-child(2) {
-            animation-delay: 0.5s;
-            background: var(--gradient-secondary);
-            height: 450px;
-        }
-
-        .device:nth-child(3) {
-            animation-delay: 1s;
-            background: var(--gradient-accent);
-            width: 300px;
-            height: 200px;
-        }
-
-        @keyframes deviceFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Футер */
+        /* === ФУТЕР === */
         footer {
-            padding: 100px 5vw 60px;
+            padding: 80px var(--container-padding) 40px;
+            background: var(--bg-secondary);
+            text-align: center;
             position: relative;
             overflow: hidden;
-            min-height: 50vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, 
-                rgba(10, 10, 10, 1) 0%,
-                rgba(0, 0, 0, 1) 100%
-            );
         }
 
         .footer-content {
-            text-align: center;
             max-width: 800px;
             margin: 0 auto;
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
         .footer-logo {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            margin-bottom: 30px;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 20px;
-            flex-wrap: wrap;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 800;
         }
 
-        .footer-tagline {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            margin-bottom: 40px;
+        .footer-description {
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            font-weight: 300;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 20px;
-            padding: 25px 60px;
-            border-radius: 60px;
+            gap: 12px;
+            padding: 16px 32px;
             background: var(--gradient-primary);
             color: white;
-            font-weight: 800;
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
             text-decoration: none;
-            transition: var(--transition-bounce);
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition-normal);
             border: none;
             cursor: pointer;
-            box-shadow: 
-                0 20px 50px rgba(94, 92, 230, 0.4),
-                0 0 0 2px rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
         }
 
         .cta-button:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 
-                0 30px 70px rgba(94, 92, 230, 0.6),
-                0 0 30px rgba(94, 92, 230, 0.4);
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(94, 92, 230, 0.3);
         }
 
         .copyright {
@@ -1244,12 +782,11 @@
             font-size: 0.9rem;
         }
 
-        /* Анимация появления элементов */
+        /* === АНИМАЦИЯ ПОЯВЛЕНИЯ === */
         .fade-in {
             opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
         .fade-in.visible {
@@ -1257,280 +794,248 @@
             transform: translateY(0);
         }
 
-        /* Специальные эффекты */
-        .floating-element {
-            animation: floatElement 8s infinite ease-in-out;
-        }
-
-        @keyframes floatElement {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(120deg); }
-            66% { transform: translateY(10px) rotate(240deg); }
-        }
-
-        .rotate-element {
-            animation: rotateElement 20s infinite linear;
-        }
-
-        @keyframes rotateElement {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .pulse-element {
-            animation: pulseElement 3s infinite ease-in-out;
-        }
-
-        @keyframes pulseElement {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Адаптивные медиа-запросы */
+        /* === АДАПТИВНОСТЬ === */
         @media (max-width: 1024px) {
-            .features-grid,
-            .services-grid {
-                grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
             
             .security-demo {
                 flex-direction: column;
                 gap: 40px;
             }
-            
-            .security-visual {
-                height: 300px;
-            }
         }
 
         @media (max-width: 768px) {
-            section {
-                padding: 100px 5vw;
+            .nav-links {
+                display: none;
             }
             
-            h1 {
-                font-size: clamp(2rem, 6vw, 3rem);
+            .mobile-menu-btn {
+                display: block;
             }
             
-            h2 {
-                font-size: clamp(1.5rem, 5vw, 2.5rem);
+            .hero {
+                padding-top: calc(var(--header-height) + 60px);
+            }
+            
+            .section-title {
+                font-size: clamp(1.8rem, 6vw, 2.5rem);
             }
             
             .feature-card,
             .service-card {
                 padding: 30px 20px;
-                min-height: 250px;
-            }
-            
-            .feature-icon,
-            .service-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-            
-            .device {
-                width: 150px;
-                height: 300px;
-            }
-            
-            .device:nth-child(2) {
-                height: 350px;
-            }
-            
-            .device:nth-child(3) {
-                width: 200px;
-                height: 150px;
             }
         }
 
         @media (max-width: 480px) {
-            .countdown {
+            :root {
+                --container-padding: 15px;
+            }
+            
+            .features-grid,
+            .services-grid {
                 grid-template-columns: 1fr;
             }
             
-            .countdown-item {
-                padding: 20px;
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .mobile-menu {
-                width: 100%;
-                border-left: none;
+            .footer-logo {
+                flex-direction: column;
+                gap: 10px;
             }
-            
-            .cta-button {
-                padding: 20px 40px;
-                width: 100%;
-                justify-content: center;
-            }
+        }
+
+        /* === ПРОГРЕСС-БАР СКРОЛЛА === */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--gradient-primary);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* === ТОСТ УВЕДОМЛЕНИЯ === */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: var(--text-primary);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: 1002;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <!-- ПАРТИКЛЫ -->
-    <div class="particles" id="particles"></div>
-
     <!-- ЭКРАН ЗАГРУЗКИ -->
-    <div class="loader" id="loader">
-        <div class="loader-hologram"></div>
-        <div class="loader-logo">
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-gradient"></div>
+        <div class="loading-logo">
             <i class="fas fa-comment-alt"></i>
         </div>
-        <div class="loader-text">Vaymessage</div>
-        
-        <div class="loader-progress">
-            <div class="loader-progress-bar"></div>
-        </div>
-        
-        <div class="loader-stats">
-            <div class="loader-stat">
-                <div class="loader-stat-number" id="loadCPU">0%</div>
-                <div>Загрузка AI</div>
-            </div>
-            <div class="loader-stat">
-                <div class="loader-stat-number" id="loadUI">0%</div>
-                <div>Интерфейс</div>
-            </div>
-            <div class="loader-stat">
-                <div class="loader-stat-number" id="loadSecurity">0%</div>
-                <div>Безопасность</div>
-            </div>
-            <div class="loader-stat">
-                <div class="loader-stat-number" id="loadOptimization">0%</div>
-                <div>Оптимизация</div>
-            </div>
+        <div class="loading-text">Загрузка Vaymessage...</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
         </div>
     </div>
 
-    <!-- КАРТОЧКА СОБЫТИЯ -->
-    <div class="event-card glass" id="eventCard">
-        <button class="event-close" id="eventClose">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="event-header">
-            <div class="event-title">Запуск Vaymessage</div>
-            <div class="event-badge">Скоро</div>
+    <!-- ПРОГРЕСС-БАР СКРОЛЛА -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ТОСТ УВЕДОМЛЕНИЯ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ШАПКА -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-comment-alt"></i>
+                </div>
+                <div class="logo-text">
+                    Vaymessage
+                    <span class="beta-badge">Бета</span>
+                </div>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">Возможности</a>
+                <a href="#security" class="nav-link">Безопасность</a>
+                <a href="#ai" class="nav-link">AI</a>
+                <a href="#services" class="nav-link">Сервисы</a>
+            </nav>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Открыть меню">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <div class="event-date">
-            <i class="fas fa-calendar-alt"></i>
-            1 июля 2026
-        </div>
-        <div class="countdown">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">00</div>
-                <div class="countdown-label">дней</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">00</div>
-                <div class="countdown-label">часов</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">00</div>
-                <div class="countdown-label">минут</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">00</div>
-                <div class="countdown-label">секунд</div>
-            </div>
-        </div>
-        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6;">
-            Мессенджер нового поколения откроется для всех пользователей. 
-            Подготовьтесь к революции в общении!
-        </p>
-    </div>
+    </header>
 
     <!-- МОБИЛЬНОЕ МЕНЮ -->
     <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" id="mobileMenuClose">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Закрыть меню">
             <i class="fas fa-times"></i>
         </button>
         <a href="#features" class="nav-link">Возможности</a>
         <a href="#security" class="nav-link">Безопасность</a>
         <a href="#ai" class="nav-link">AI функции</a>
         <a href="#services" class="nav-link">Сервисы</a>
-        <a href="#optimization" class="nav-link">Оптимизация</a>
-        <a href="#eventCard" class="nav-link">Таймер запуска</a>
+        <a href="#event" class="nav-link">Таймер запуска</a>
     </div>
 
-    <!-- НАВИГАЦИЯ -->
-    <header id="header">
-        <nav>
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-comment-alt"></i>
-                </div>
-                <div class="logo-text">
-                    <span class="vay">Vay</span>
-                    <span class="message">message</span>
-                    <span class="beta-badge">Бета</span>
-                </div>
-            </a>
-            <div class="nav-links">
-                <a href="#features" class="nav-link">Возможности</a>
-                <a href="#security" class="nav-link">Безопасность</a>
-                <a href="#ai" class="nav-link">AI функции</a>
-                <a href="#services" class="nav-link">Сервисы</a>
-                <a href="#optimization" class="nav-link">Оптимизация</a>
-                <a href="#eventCard" class="nav-link">Таймер запуска</a>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
+    <!-- КАРТОЧКА СОБЫТИЯ -->
+    <div class="event-container" id="eventContainer">
+        <div class="event-card">
+            <button class="event-close" id="eventClose" aria-label="Закрыть уведомление">
+                <i class="fas fa-times"></i>
             </button>
-        </nav>
-    </header>
+            <div class="event-header">
+                <div class="event-title">Запуск Vaymessage</div>
+                <div class="event-badge">Скоро</div>
+            </div>
+            <div class="event-date">
+                <i class="fas fa-calendar-alt"></i>
+                1 июля 2026
+            </div>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">дней</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">часов</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">минут</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">секунд</div>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Мессенджер нового поколения откроется для всех пользователей.
+                Подготовьтесь к революции в общении!
+            </p>
+        </div>
+    </div>
 
     <!-- ГЕРОЙ СЕКЦИЯ -->
-    <section class="hero" id="hero">
-        <div class="hero-bg"></div>
+    <section class="hero">
         <div class="container">
-            <div class="hero-content fade-in">
-                <div class="update-badge">
-                    <i class="fas fa-bolt"></i>
-                    Новое поколение общения
-                </div>
-                <h1>Vaymessage</h1>
-                <p class="hero-tagline">
-                    Первый полностью адаптивный мессенджер с искусственным интеллектом, 
-                    продвинутой безопасностью и интерфейсом нового поколения.
-                    <span class="hero-highlight">Общение будущего начинается здесь.</span>
-                </p>
-            </div>
+            <h1 class="hero-title fade-in">Vaymessage</h1>
+            <p class="hero-description fade-in">
+                Первый полностью адаптивный мессенджер с искусственным интеллектом, 
+                продвинутой безопасностью и интерфейсом нового поколения.
+            </p>
+            <a href="#features" class="cta-button fade-in">
+                <i class="fas fa-arrow-down"></i>
+                Узнать больше
+            </a>
         </div>
     </section>
 
     <!-- ВОЗМОЖНОСТИ -->
     <section id="features">
         <div class="container">
-            <p class="section-subtitle">Инновации</p>
-            <h2>Возможности нового поколения</h2>
-            <p>Vaymessage объединяет лучшие технологии для идеального общения</p>
+            <div class="section-header">
+                <div class="section-subtitle fade-in">Инновации</div>
+                <h2 class="section-title fade-in">Возможности нового поколения</h2>
+                <p class="section-description fade-in">
+                    Vaymessage объединяет лучшие технологии для идеального общения
+                </p>
+            </div>
             
             <div class="features-grid">
-                <div class="feature-card glass fade-in">
-                    <div class="feature-number">01</div>
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>Интеллектуальный AI</h3>
-                    <p>Умный помощник в каждом чате с расшифровкой голосовых и интеллектуальными подсказками</p>
+                    <h3 class="feature-title">Интеллектуальный AI</h3>
+                    <p class="feature-description">
+                        Умный помощник в каждом чате с расшифровкой голосовых и интеллектуальными подсказками
+                    </p>
                 </div>
                 
-                <div class="feature-card glass fade-in">
-                    <div class="feature-number">02</div>
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Максимальная безопасность</h3>
-                    <p>Многоуровневое шифрование и система защиты от взлома в реальном времени</p>
+                    <h3 class="feature-title">Максимальная безопасность</h3>
+                    <p class="feature-description">
+                        Многоуровневое шифрование и система защиты от взлома в реальном времени
+                    </p>
                 </div>
                 
-                <div class="feature-card glass fade-in">
-                    <div class="feature-number">03</div>
+                <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-palette"></i>
                     </div>
-                    <h3>Адаптивный интерфейс</h3>
-                    <p>Liquid Glass дизайн, автоматически подстраивающийся под любое устройство</p>
+                    <h3 class="feature-title">Адаптивный интерфейс</h3>
+                    <p class="feature-description">
+                        Liquid Glass дизайн, автоматически подстраивающийся под любое устройство
+                    </p>
                 </div>
             </div>
         </div>
@@ -1539,37 +1044,36 @@
     <!-- БЕЗОПАСНОСТЬ -->
     <section id="security">
         <div class="container">
-            <p class="section-subtitle">Защита данных</p>
-            <h2>Безопасность на первом месте</h2>
-            <p>Ваши переписки защищены на уровне государственных стандартов</p>
+            <div class="section-header">
+                <div class="section-subtitle fade-in">Защита данных</div>
+                <h2 class="section-title fade-in">Безопасность на первом месте</h2>
+                <p class="section-description fade-in">
+                    Ваши переписки защищены на уровне государственных стандартов
+                </p>
+            </div>
             
             <div class="security-demo">
-                <div class="security-visual">
+                <div class="security-visual fade-in">
                     <div class="security-shield">
                         <i class="fas fa-lock"></i>
                     </div>
-                    <div class="threat-indicator">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="threat-indicator">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
                 </div>
                 
-                <div class="features-grid">
-                    <div class="feature-card glass fade-in">
-                        <h3>Сквозное шифрование</h3>
-                        <p>Все сообщения шифруются до отправки на сервер с военными алгоритмами</p>
-                    </div>
-                    
-                    <div class="feature-card glass fade-in">
-                        <h3>Система тревоги</h3>
-                        <p>Мгновенные уведомления о попытках несанкционированного доступа</p>
-                    </div>
-                    
-                    <div class="feature-card glass fade-in">
-                        <h3>Vaymessage ID</h3>
-                        <p>Единый центр управления безопасностью и сеансами на всех устройствах</p>
+                <div class="security-content">
+                    <div class="features-grid">
+                        <div class="feature-card fade-in">
+                            <h3 class="feature-title">Сквозное шифрование</h3>
+                            <p class="feature-description">
+                                Все сообщения шифруются до отправки на сервер с военными алгоритмами
+                            </p>
+                        </div>
+                        
+                        <div class="feature-card fade-in">
+                            <h3 class="feature-title">Система тревоги</h3>
+                            <p class="feature-description">
+                                Мгновенные уведомления о попытках несанкционированного доступа
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1579,33 +1083,43 @@
     <!-- AI ФУНКЦИИ -->
     <section id="ai">
         <div class="container">
-            <p class="section-subtitle">Искусственный интеллект</p>
-            <h2>Умный помощник в общении</h2>
-            <p>AI делает общение удобнее, безопаснее и эффективнее</p>
+            <div class="section-header">
+                <div class="section-subtitle fade-in">Искусственный интеллект</div>
+                <h2 class="section-title fade-in">Умный помощник в общении</h2>
+                <p class="section-description fade-in">
+                    AI делает общение удобнее, безопаснее и эффективнее
+                </p>
+            </div>
             
             <div class="features-grid">
-                <div class="feature-card glass fade-in">
+                <div class="feature-card fade-in">
                     <div class="feature-icon" style="background: var(--gradient-secondary);">
                         <i class="fas fa-microphone"></i>
                     </div>
-                    <h3>Расшифровка голосовых</h3>
-                    <p>Автоматическая расшифровка голосовых сообщений с высокой точностью</p>
+                    <h3 class="feature-title">Расшифровка голосовых</h3>
+                    <p class="feature-description">
+                        Автоматическая расшифровка голосовых сообщений с высокой точностью
+                    </p>
                 </div>
                 
-                <div class="feature-card glass fade-in">
+                <div class="feature-card fade-in">
                     <div class="feature-icon" style="background: var(--gradient-secondary);">
                         <i class="fas fa-music"></i>
                     </div>
-                    <h3>@музыка команды</h3>
-                    <p>Быстрый поиск и отправка музыки через умные команды в чатах</p>
+                    <h3 class="feature-title">@музыка команды</h3>
+                    <p class="feature-description">
+                        Быстрый поиск и отправка музыки через умные команды в чатах
+                    </p>
                 </div>
                 
-                <div class="feature-card glass fade-in">
+                <div class="feature-card fade-in">
                     <div class="feature-icon" style="background: var(--gradient-secondary);">
                         <i class="fas fa-robot"></i>
                     </div>
-                    <h3>AI-модерация</h3>
-                    <p>Защита от спама и мошенников с помощью искусственного интеллекта</p>
+                    <h3 class="feature-title">AI-модерация</h3>
+                    <p class="feature-description">
+                        Защита от спама и мошенников с помощью искусственного интеллекта
+                    </p>
                 </div>
             </div>
         </div>
@@ -1614,73 +1128,53 @@
     <!-- СЕРВИСЫ -->
     <section id="services">
         <div class="container">
-            <p class="section-subtitle">Экосистема</p>
-            <h2>Больше чем мессенджер</h2>
-            <p>Полный набор сервисов для общения, работы и развлечений</p>
+            <div class="section-header">
+                <div class="section-subtitle fade-in">Экосистема</div>
+                <h2 class="section-title fade-in">Больше чем мессенджер</h2>
+                <p class="section-description fade-in">
+                    Полный набор сервисов для общения, работы и развлечений
+                </p>
+            </div>
             
             <div class="services-grid">
-                <div class="service-card glass service-cloud fade-in">
+                <div class="service-card service-cloud fade-in">
                     <div class="service-icon">
                         <i class="fas fa-cloud"></i>
                     </div>
-                    <h3>Vay Cloud</h3>
-                    <p>Безопасное облачное хранилище с автоматической проверкой файлов</p>
+                    <h3 class="feature-title">Vay Cloud</h3>
+                    <p class="feature-description">
+                        Безопасное облачное хранилище с автоматической проверкой файлов
+                    </p>
                 </div>
                 
-                <div class="service-card glass service-office fade-in">
+                <div class="service-card service-office fade-in">
                     <div class="service-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
-                    <h3>Vay Office</h3>
-                    <p>Работа с документами и таблицами прямо в мессенджере</p>
+                    <h3 class="feature-title">Vay Office</h3>
+                    <p class="feature-description">
+                        Работа с документами и таблицами прямо в мессенджере
+                    </p>
                 </div>
                 
-                <div class="service-card glass service-music fade-in">
+                <div class="service-card service-music fade-in">
                     <div class="service-icon">
                         <i class="fas fa-music"></i>
                     </div>
-                    <h3>Vay Music</h3>
-                    <p>Стриминг музыки и подкастов с интеллектуальными рекомендациями</p>
+                    <h3 class="feature-title">Vay Music</h3>
+                    <p class="feature-description">
+                        Стриминг музыки и подкастов с интеллектуальными рекомендациями
+                    </p>
                 </div>
                 
-                <div class="service-card glass service-video fade-in">
+                <div class="service-card service-video fade-in">
                     <div class="service-icon">
                         <i class="fas fa-video"></i>
                     </div>
-                    <h3>Vay Video</h3>
-                    <p>Платформа для видео и трансляций в высоком качестве</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ОПТИМИЗАЦИЯ -->
-    <section id="optimization">
-        <div class="container">
-            <p class="section-subtitle">Технологии</p>
-            <h2>Оптимизация под любые устройства</h2>
-            <p>Работает идеально на смартфонах, планшетах, компьютерах и телевизорах</p>
-            
-            <div class="devices-showcase">
-                <div class="device"></div>
-                <div class="device"></div>
-                <div class="device"></div>
-            </div>
-            
-            <div class="features-grid" style="margin-top: 60px;">
-                <div class="feature-card glass fade-in">
-                    <h3>Адаптивный интерфейс</h3>
-                    <p>Автоматическая подстройка под размер экрана и возможности устройства</p>
-                </div>
-                
-                <div class="feature-card glass fade-in">
-                    <h3>Оптимизация ресурсов</h3>
-                    <p>Умное управление памятью и производительностью для любой техники</p>
-                </div>
-                
-                <div class="feature-card glass fade-in">
-                    <h3>Без загрузок</h3>
-                    <p>Браузерная версия работает без установки приложений</p>
+                    <h3 class="feature-title">Vay Video</h3>
+                    <p class="feature-description">
+                        Платформа для видео и трансляций в высоком качестве
+                    </p>
                 </div>
             </div>
         </div>
@@ -1691,22 +1185,21 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo fade-in">
-                    <div class="logo-icon" style="width: 80px; height: 80px;">
+                    <div style="width: 60px; height: 60px; border-radius: 16px; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
                         <i class="fas fa-comment-alt"></i>
                     </div>
-                    <div class="logo-text">
-                        <span class="vay">Vay</span>
-                        <span class="message">message</span>
-                        <span class="beta-badge">Бета</span>
-                    </div>
+                    Vaymessage
+                    <span class="beta-badge">Бета</span>
                 </div>
-                <p class="footer-tagline fade-in">
+                
+                <p class="footer-description fade-in">
                     Мессенджер нового поколения с искусственным интеллектом, 
                     продвинутой безопасностью и полностью адаптивным интерфейсом.
                 </p>
                 
-                <button class="cta-button fade-in" id="ctaButton">
-                    <i class="fas fa-rocket"></i> Следить за запуском
+                <button class="cta-button fade-in" id="showEventBtn">
+                    <i class="fas fa-rocket"></i>
+                    Следить за запуском
                 </button>
                 
                 <p class="copyright fade-in">
@@ -1718,142 +1211,118 @@
     </footer>
 
     <script>
-        // === ГЕНЕРАЦИЯ ПАРТИКЛ ===
-        function createParticles() {
-            const particles = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 20 : 40;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
+        // === КОНФИГУРАЦИЯ ===
+        const CONFIG = {
+            loadingDuration: 2000,
+            eventLaunchDate: 'July 1, 2026 00:00:00',
+            toastDuration: 3000
+        };
+
+        // === УТИЛИТЫ ===
+        class Utils {
+            static debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            static throttle(func, limit) {
+                let inThrottle;
+                return function() {
+                    const args = arguments;
+                    const context = this;
+                    if (!inThrottle) {
+                        func.apply(context, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                };
+            }
+
+            static showToast(message, type = 'info') {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.className = `toast show ${type}`;
                 
-                // Случайные параметры
-                const size = Math.random() * 100 + 50;
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 20 + 10;
-                const hue = Math.floor(Math.random() * 360);
-                
-                // Стилизация
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${x}%`;
-                particle.style.top = `${y}%`;
-                particle.style.background = `linear-gradient(135deg, 
-                    hsl(${hue}, 100%, 60%), 
-                    hsl(${(hue + 60) % 360}, 100%, 60%)
-                )`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
-                
-                particles.appendChild(particle);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, CONFIG.toastDuration);
             }
         }
 
-        // === ЭКРАН ЗАГРУЗКИ ===
-        function startLoading() {
-            const loader = document.getElementById('loader');
-            const stats = {
-                cpu: document.getElementById('loadCPU'),
-                ui: document.getElementById('loadUI'),
-                security: document.getElementById('loadSecurity'),
-                optimization: document.getElementById('loadOptimization')
-            };
-            
-            let progress = {
-                cpu: 0,
-                ui: 0,
-                security: 0,
-                optimization: 0
-            };
-            
-            const interval = setInterval(() => {
-                // Постепенное увеличение прогресса
-                progress.cpu = Math.min(100, progress.cpu + Math.random() * 15);
-                progress.ui = Math.min(100, progress.ui + Math.random() * 12);
-                progress.security = Math.min(100, progress.security + Math.random() * 10);
-                progress.optimization = Math.min(100, progress.optimization + Math.random() * 8);
-                
-                // Обновление UI
-                stats.cpu.textContent = `${Math.floor(progress.cpu)}%`;
-                stats.ui.textContent = `${Math.floor(progress.ui)}%`;
-                stats.security.textContent = `${Math.floor(progress.security)}%`;
-                stats.optimization.textContent = `${Math.floor(progress.optimization)}%`;
-                
-                // Проверка завершения
-                if (progress.cpu >= 100 && progress.ui >= 100 && 
-                    progress.security >= 100 && progress.optimization >= 100) {
-                    clearInterval(interval);
+        // === МЕНЕДЖЕР ЗАГРУЗКИ ===
+        class LoadingManager {
+            constructor() {
+                this.loadingScreen = document.getElementById('loadingScreen');
+                this.init();
+            }
+
+            init() {
+                // Симуляция загрузки
+                setTimeout(() => {
+                    this.loadingScreen.classList.add('hidden');
                     
-                    // Анимация завершения
+                    // Показываем тост приветствия
                     setTimeout(() => {
-                        loader.classList.add('hidden');
-                        
-                        // Запуск анимации появления контента
-                        setTimeout(() => {
-                            document.querySelectorAll('.fade-in').forEach(el => {
-                                el.classList.add('visible');
-                            });
-                        }, 300);
-                    }, 500);
-                }
-            }, 100);
+                        Utils.showToast('Vaymessage готов к работе!', 'success');
+                    }, 300);
+                }, CONFIG.loadingDuration);
+            }
         }
 
         // === ТАЙМЕР ОБРАТНОГО ОТСЧЕТА ===
         class CountdownTimer {
             constructor() {
-                this.days = document.getElementById('days');
-                this.hours = document.getElementById('hours');
-                this.minutes = document.getElementById('minutes');
-                this.seconds = document.getElementById('seconds');
-                this.launchDate = new Date('July 1, 2026 00:00:00').getTime();
+                this.daysEl = document.getElementById('days');
+                this.hoursEl = document.getElementById('hours');
+                this.minutesEl = document.getElementById('minutes');
+                this.secondsEl = document.getElementById('seconds');
+                this.launchDate = new Date(CONFIG.eventLaunchDate).getTime();
                 this.interval = null;
                 this.init();
             }
-            
+
             init() {
                 this.update();
                 this.interval = setInterval(() => this.update(), 1000);
             }
-            
+
             update() {
                 const now = Date.now();
                 const timeLeft = this.launchDate - now;
-                
-                if (timeLeft > 0) {
-                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                    
-                    this.updateElement(this.days, days);
-                    this.updateElement(this.hours, hours);
-                    this.updateElement(this.minutes, minutes);
-                    this.updateElement(this.seconds, seconds);
-                    
-                    // Анимация для секунд
-                    this.seconds.style.transform = 'scale(1.2)';
-                    setTimeout(() => {
-                        this.seconds.style.transform = 'scale(1)';
-                    }, 300);
-                } else {
+
+                if (timeLeft <= 0) {
                     this.setLaunched();
+                    return;
                 }
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                this.daysEl.textContent = String(days).padStart(2, '0');
+                this.hoursEl.textContent = String(hours).padStart(2, '0');
+                this.minutesEl.textContent = String(minutes).padStart(2, '0');
+                this.secondsEl.textContent = String(seconds).padStart(2, '0');
+
+                // Анимация обновления секунд
+                this.animateUpdate(this.secondsEl);
             }
-            
-            updateElement(element, value) {
-                const formatted = value.toString().padStart(2, '0');
-                if (element.textContent !== formatted) {
-                    element.textContent = formatted;
-                    element.style.animation = 'none';
-                    setTimeout(() => {
-                        element.style.animation = 'pulseElement 0.5s ease';
-                    }, 10);
-                }
+
+            animateUpdate(element) {
+                element.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 150);
             }
-            
+
             setLaunched() {
                 clearInterval(this.interval);
                 document.querySelector('.countdown').innerHTML = `
@@ -1865,250 +1334,292 @@
             }
         }
 
-        // === МОБИЛЬНОЕ МЕНЮ ===
-        class MobileMenu {
+        // === МЕНЕДЖЕР НАВИГАЦИИ ===
+        class NavigationManager {
             constructor() {
-                this.menuBtn = document.getElementById('mobileMenuBtn');
-                this.menu = document.getElementById('mobileMenu');
-                this.closeBtn = document.getElementById('mobileMenuClose');
-                this.isOpen = false;
+                this.header = document.getElementById('header');
+                this.mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                this.mobileMenu = document.getElementById('mobileMenu');
+                this.mobileMenuClose = document.getElementById('mobileMenuClose');
+                this.isMenuOpen = false;
                 this.init();
             }
-            
+
             init() {
-                this.menuBtn.addEventListener('click', () => this.open());
-                this.closeBtn.addEventListener('click', () => this.close());
-                
-                // Закрытие при клике на ссылку
-                this.menu.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', () => this.close());
+                // Скролл хедера
+                window.addEventListener('scroll', Utils.throttle(() => {
+                    this.toggleHeaderShadow();
+                }, 100));
+
+                // Мобильное меню
+                this.mobileMenuBtn.addEventListener('click', () => this.openMobileMenu());
+                this.mobileMenuClose.addEventListener('click', () => this.closeMobileMenu());
+
+                // Закрытие меню при клике на ссылку
+                this.mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => this.closeMobileMenu());
                 });
-                
-                // Закрытие при клике вне меню
+
+                // Закрытие меню при клике вне его
                 document.addEventListener('click', (e) => {
-                    if (this.isOpen && 
-                        !this.menu.contains(e.target) && 
-                        !this.menuBtn.contains(e.target)) {
-                        this.close();
+                    if (this.isMenuOpen && 
+                        !this.mobileMenu.contains(e.target) && 
+                        !this.mobileMenuBtn.contains(e.target)) {
+                        this.closeMobileMenu();
+                    }
+                });
+
+                // Закрытие меню по ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isMenuOpen) {
+                        this.closeMobileMenu();
                     }
                 });
             }
-            
-            open() {
-                this.menu.classList.add('active');
-                this.isOpen = true;
+
+            toggleHeaderShadow() {
+                if (window.scrollY > 50) {
+                    this.header.classList.add('scrolled');
+                } else {
+                    this.header.classList.remove('scrolled');
+                }
+            }
+
+            openMobileMenu() {
+                this.mobileMenu.classList.add('active');
+                this.isMenuOpen = true;
                 document.body.style.overflow = 'hidden';
             }
-            
-            close() {
-                this.menu.classList.remove('active');
-                this.isOpen = false;
+
+            closeMobileMenu() {
+                this.mobileMenu.classList.remove('active');
+                this.isMenuOpen = false;
                 document.body.style.overflow = '';
             }
         }
 
-        // === КАРТОЧКА СОБЫТИЯ ===
-        class EventCard {
+        // === МЕНЕДЖЕР КАРТОЧКИ СОБЫТИЯ ===
+        class EventCardManager {
             constructor() {
-                this.card = document.getElementById('eventCard');
-                this.closeBtn = document.getElementById('eventClose');
-                this.ctaButton = document.getElementById('ctaButton');
+                this.eventContainer = document.getElementById('eventContainer');
+                this.eventClose = document.getElementById('eventClose');
+                this.showEventBtn = document.getElementById('showEventBtn');
                 this.isVisible = true;
                 this.init();
             }
-            
+
             init() {
-                this.closeBtn.addEventListener('click', () => this.hide());
-                this.ctaButton.addEventListener('click', () => this.show());
-                
+                // Закрытие карточки
+                this.eventClose.addEventListener('click', () => this.hide());
+
+                // Показ карточки по кнопке
+                this.showEventBtn.addEventListener('click', () => this.show());
+
                 // Закрытие по ESC
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape' && this.isVisible) {
                         this.hide();
                     }
                 });
+
+                // Адаптация на мобильных
+                this.adaptForMobile();
+                window.addEventListener('resize', Utils.debounce(() => this.adaptForMobile(), 250));
             }
-            
+
             hide() {
-                this.card.style.animation = 'eventSlideIn 0.5s ease reverse forwards';
+                this.eventContainer.style.opacity = '0';
+                this.eventContainer.style.transform = 'translateX(100px)';
                 this.isVisible = false;
                 
                 setTimeout(() => {
-                    this.card.style.display = 'none';
-                }, 500);
+                    this.eventContainer.style.display = 'none';
+                }, 300);
             }
-            
+
             show() {
-                this.card.style.display = 'block';
-                this.card.style.animation = 'eventSlideIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+                this.eventContainer.style.display = 'block';
                 this.isVisible = true;
                 
-                // Прокрутка к карточке
                 setTimeout(() => {
-                    this.card.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center' 
+                    this.eventContainer.style.opacity = '1';
+                    this.eventContainer.style.transform = 'translateX(0)';
+                    
+                    // Прокрутка к карточке
+                    this.eventContainer.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
                     });
-                }, 100);
+                }, 10);
+
+                Utils.showToast('Таймер запуска показан', 'info');
+            }
+
+            adaptForMobile() {
+                if (window.innerWidth <= 768) {
+                    this.eventContainer.style.position = 'relative';
+                    this.eventContainer.style.top = 'auto';
+                    this.eventContainer.style.right = 'auto';
+                    this.eventContainer.style.width = '100%';
+                } else {
+                    this.eventContainer.style.position = 'fixed';
+                    this.eventContainer.style.top = 'calc(var(--header-height) + 20px)';
+                    this.eventContainer.style.right = '20px';
+                    this.eventContainer.style.width = 'min(320px, 90vw)';
+                }
             }
         }
 
-        // === АНИМАЦИЯ ПРИ СКРОЛЛЕ ===
-        class ScrollAnimations {
+        // === МЕНЕДЖЕР АНИМАЦИЙ ===
+        class AnimationManager {
             constructor() {
-                this.header = document.getElementById('header');
-                this.observerOptions = {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -100px 0px'
-                };
+                this.scrollProgress = document.getElementById('scrollProgress');
                 this.init();
             }
-            
+
             init() {
-                // Анимация хедера
-                window.addEventListener('scroll', () => this.handleScroll());
-                
-                // Intersection Observer для появления элементов
-                this.observer = new IntersectionObserver((entries) => {
+                // Прогресс-бар скролла
+                window.addEventListener('scroll', Utils.throttle(() => {
+                    this.updateScrollProgress();
+                }, 100));
+
+                // Анимация появления элементов
+                this.initIntersectionObserver();
+            }
+
+            updateScrollProgress() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                this.scrollProgress.style.width = scrolled + '%';
+            }
+
+            initIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
                         }
                     });
-                }, this.observerOptions);
-                
-                document.querySelectorAll('.fade-in').forEach(el => {
-                    this.observer.observe(el);
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
                 });
-            }
-            
-            handleScroll() {
-                const scrolled = window.pageYOffset;
-                
-                if (scrolled > 100) {
-                    this.header.classList.add('scrolled');
-                } else {
-                    this.header.classList.remove('scrolled');
-                }
+
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    observer.observe(el);
+                });
             }
         }
 
-        // === ПЛАВНАЯ ПРОКРУТКА ===
-        class SmoothScroll {
+        // === МЕНЕДЖЕР ПЛАВНОЙ ПРОКРУТКИ ===
+        class SmoothScrollManager {
             constructor() {
                 this.init();
             }
-            
+
             init() {
                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     anchor.addEventListener('click', (e) => {
-                        const targetId = anchor.getAttribute('href');
-                        if (targetId === '#') return;
+                        const href = anchor.getAttribute('href');
+                        if (href === '#') return;
                         
                         e.preventDefault();
-                        const target = document.querySelector(targetId);
-                        if (target) {
-                            const headerHeight = 80;
-                            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                            window.scrollTo({
-                                top: targetPosition - headerHeight,
-                                behavior: 'smooth'
-                            });
-                        }
+                        this.scrollToElement(href);
+                    });
+                });
+            }
+
+            scrollToElement(selector) {
+                const target = document.querySelector(selector);
+                if (!target) return;
+
+                const headerHeight = document.getElementById('header').offsetHeight;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = targetPosition - headerHeight;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // === ГЛАВНЫЙ КЛАСС ПРИЛОЖЕНИЯ ===
+        class App {
+            constructor() {
+                this.loadingManager = null;
+                this.countdownTimer = null;
+                this.navigationManager = null;
+                this.eventCardManager = null;
+                this.animationManager = null;
+                this.smoothScrollManager = null;
+                this.init();
+            }
+
+            init() {
+                // Инициализация всех менеджеров
+                this.loadingManager = new LoadingManager();
+                this.countdownTimer = new CountdownTimer();
+                this.navigationManager = new NavigationManager();
+                this.eventCardManager = new EventCardManager();
+                this.animationManager = new AnimationManager();
+                this.smoothScrollManager = new SmoothScrollManager();
+
+                // Дополнительные обработчики
+                this.bindEvents();
+                
+                // Уведомление о готовности
+                console.log('Vaymessage инициализирован');
+            }
+
+            bindEvents() {
+                // Предотвращение контекстного меню на карточках
+                document.querySelectorAll('.feature-card, .service-card').forEach(card => {
+                    card.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        Utils.showToast('Интерактивный элемент Vaymessage', 'info');
+                    });
+                });
+
+                // Эффект наведения на кнопки
+                document.querySelectorAll('button, .cta-button').forEach(btn => {
+                    btn.addEventListener('mouseenter', () => {
+                        btn.style.transform = 'translateY(-2px)';
+                    });
+                    
+                    btn.addEventListener('mouseleave', () => {
+                        btn.style.transform = 'translateY(0)';
                     });
                 });
             }
         }
 
-        // === ЭФФЕКТ РИППЛА ===
-        class RippleEffect {
-            constructor() {
-                document.addEventListener('click', (e) => this.createRipple(e));
-            }
-            
-            createRipple(e) {
-                // Игнорируем клики по ссылкам и кнопкам
-                if (e.target.closest('a') || e.target.closest('button')) return;
-                
-                const ripple = document.createElement('div');
-                const size = Math.random() * 200 + 100;
-                
-                Object.assign(ripple.style, {
-                    position: 'fixed',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(94, 92, 230, 0.3) 0%, transparent 70%)',
-                    pointerEvents: 'none',
-                    zIndex: '9999',
-                    left: `${e.clientX}px`,
-                    top: `${e.clientY}px`,
-                    width: '0',
-                    height: '0',
-                    transform: 'translate(-50%, -50%)',
-                    animation: 'none'
-                });
-                
-                document.body.appendChild(ripple);
-                
-                ripple.animate([
-                    { width: '0', height: '0', opacity: 1 },
-                    { width: `${size}px`, height: `${size}px`, opacity: 0 }
-                ], {
-                    duration: 800,
-                    easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-                });
-                
-                setTimeout(() => ripple.remove(), 800);
-            }
-        }
-
-        // === ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ===
+        // === ЗАПУСК ПРИЛОЖЕНИЯ ===
         document.addEventListener('DOMContentLoaded', () => {
-            // Создание частиц
-            createParticles();
-            
-            // Запуск загрузки
-            startLoading();
-            
-            // Инициализация компонентов
-            new CountdownTimer();
-            new MobileMenu();
-            new EventCard();
-            new ScrollAnimations();
-            new SmoothScroll();
-            new RippleEffect();
-            
-            // Добавление анимации для интерактивных элементов
-            document.querySelectorAll('.feature-card, .service-card, .countdown-item').forEach(card => {
-                card.addEventListener('mouseenter', (e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-                    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+            // Проверка поддержки современных функций
+            if (!('IntersectionObserver' in window)) {
+                // Полифилл для старых браузеров
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
                 });
-            });
-            
-            // Эффект параллакса
-            window.addEventListener('mousemove', (e) => {
-                const x = (e.clientX / window.innerWidth - 0.5) * 20;
-                const y = (e.clientY / window.innerHeight - 0.5) * 20;
-                
-                document.querySelectorAll('.floating-element').forEach(el => {
-                    el.style.transform = `translate(${x}px, ${y}px)`;
-                });
-            });
+            }
+
+            // Запуск приложения
+            const app = new App();
+
+            // Сохранение в глобальной области для отладки
+            window.VaymessageApp = app;
         });
 
-        // === АДАПТАЦИЯ ПРИ РЕСАЙЗЕ ===
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                // Пересоздание частиц при изменении размера
-                document.getElementById('particles').innerHTML = '';
-                createParticles();
-            }, 250);
+        // === ОБРАБОТЧИКИ ОШИБОК ===
+        window.addEventListener('error', (e) => {
+            console.error('Vaymessage error:', e.error);
+            Utils.showToast('Произошла ошибка. Пожалуйста, обновите страницу.', 'error');
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Vaymessage promise rejection:', e.reason);
         });
     </script>
 </body>
