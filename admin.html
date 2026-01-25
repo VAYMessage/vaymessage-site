@@ -2,40 +2,55 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>VAY ADMIN</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="admin.css">
+<title>VAY Admin Login</title>
+<style>
+body {
+  background:#050505;
+  color:#fff;
+  font-family:Inter;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+}
+.box {
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  padding:40px;
+  border-radius:20px;
+  width:320px;
+}
+input,button {
+  width:100%;
+  margin-top:12px;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+}
+button {
+  background:#5e5ce6;
+  color:white;
+  font-weight:600;
+}
+</style>
 </head>
 <body>
 
-<div id="login" class="glass">
-<h1>VAY ADMIN</h1>
-<input type="password" id="pass" placeholder="Пароль">
-<button onclick="login()">Войти</button>
-<p id="err"></p>
+<div class="box">
+  <h2>Вход администратора</h2>
+  <input type="password" id="pass" placeholder="Пароль">
+  <button onclick="login()">Войти</button>
 </div>
 
-<div id="panel" class="hidden">
-<header>
-<h2>Админ панель</h2>
-<button onclick="logout()">Выйти</button>
-</header>
+<script>
+function login() {
+  if (document.getElementById('pass').value === "admin123") {
+    location.href = "dashboard.html";
+  } else {
+    alert("Неверный пароль");
+  }
+}
+</script>
 
-<section class="glass">
-<h3>Новое обновление</h3>
-<input id="version" placeholder="Версия">
-<input id="date" placeholder="Дата">
-<textarea id="changes" placeholder="Изменения (с новой строки)"></textarea>
-<button onclick="gen()">Сгенерировать</button>
-</section>
-
-<section class="glass">
-<h3>updates.json</h3>
-<pre id="out"></pre>
-</section>
-</div>
-
-<script src="admin.js"></script>
 </body>
 </html>
