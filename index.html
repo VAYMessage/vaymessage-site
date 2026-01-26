@@ -2,321 +2,57 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaymessage — Digital Communication OS</title>
-<meta name="description" content="Vaymessage — мессенджер нового поколения с AI, безопасностью и glass-интерфейсом">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-:root{
---bg:#050508;
---glass:rgba(255,255,255,.06);
---glass-strong:rgba(255,255,255,.1);
---border:rgba(255,255,255,.12);
---text:#fff;
---muted:rgba(255,255,255,.65);
---primary:#6d6aff;
---secondary:#38f9d7;
---gradient:linear-gradient(135deg,#6d6aff,#38f9d7);
---blur:blur(24px);
---radius:22px;
---ease:cubic-bezier(.4,0,.2,1);
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-font-family:Inter,system-ui;
-background:radial-gradient(circle at top,#101023,#050508);
-color:var(--text);
-overflow-x:hidden;
-}
-
-/* ===== LOADING ===== */
-#loader{
-position:fixed;inset:0;
-background:#050508;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-z-index:9999;
-transition:.6s;
-}
-#loader.hide{opacity:0;pointer-events:none}
-.loader-logo{
-width:110px;height:110px;
-border-radius:28px;
-background:var(--gradient);
-display:flex;align-items:center;justify-content:center;
-font-size:2.8rem;
-box-shadow:0 0 80px rgba(109,106,255,.4);
-animation:float 3s infinite ease-in-out;
-}
-@keyframes float{
-50%{transform:translateY(-10px)}
-}
-
-/* ===== HEADER ===== */
-header{
-position:fixed;top:0;width:100%;
-height:80px;
-backdrop-filter:var(--blur);
-background:rgba(5,5,8,.7);
-border-bottom:1px solid var(--border);
-z-index:1000;
-}
-nav{
-max-width:1300px;
-margin:auto;
-height:100%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 24px;
-}
-.logo{
-display:flex;align-items:center;
-gap:14px;
-font-weight:800;
-font-size:1.4rem;
-}
-.logo-icon{
-width:42px;height:42px;
-border-radius:14px;
-background:var(--gradient);
-display:flex;align-items:center;justify-content:center;
-}
-nav a{
-color:var(--muted);
-text-decoration:none;
-font-weight:500;
-transition:.3s;
-}
-nav a:hover{color:#fff}
-
-/* ===== HERO ===== */
-.hero{
-min-height:100vh;
-padding-top:120px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
-.hero h1{
-font-size:clamp(3rem,8vw,4.8rem);
-font-weight:900;
-background:var(--gradient);
--webkit-background-clip:text;
-color:transparent;
-}
-.hero p{
-max-width:720px;
-margin:30px auto;
-font-size:1.25rem;
-color:var(--muted);
-}
-.hero button{
-padding:18px 36px;
-border-radius:40px;
-border:none;
-font-weight:600;
-font-size:1.05rem;
-cursor:pointer;
-background:var(--gradient);
-color:#000;
-box-shadow:0 0 40px rgba(109,106,255,.35);
-transition:.4s var(--ease);
-}
-.hero button:hover{transform:translateY(-3px)}
-
-/* ===== SECTIONS ===== */
-section{
-padding:120px 24px;
-}
-.container{
-max-width:1200px;
-margin:auto;
-}
-.section-title{
-font-size:clamp(2.2rem,6vw,3.2rem);
-font-weight:800;
-margin-bottom:20px;
-}
-.section-desc{
-color:var(--muted);
-max-width:600px;
-}
-
-/* ===== CARDS ===== */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:32px;
-margin-top:60px;
-}
-.card{
-background:var(--glass);
-backdrop-filter:var(--blur);
-border:1px solid var(--border);
-border-radius:var(--radius);
-padding:36px;
-transition:.5s var(--ease);
-position:relative;
-overflow:hidden;
-}
-.card::after{
-content:'';
-position:absolute;inset:0;
-background:radial-gradient(circle at top,rgba(255,255,255,.12),transparent 70%);
-opacity:0;
-transition:.4s;
-}
-.card:hover::after{opacity:1}
-.card:hover{transform:translateY(-10px)}
-.card i{
-font-size:2.2rem;
-margin-bottom:20px;
-background:var(--gradient);
--webkit-background-clip:text;
-color:transparent;
-}
-
-/* ===== SECURITY ===== */
-.security-visual{
-width:260px;height:260px;
-margin:auto;
-border-radius:50%;
-background:var(--gradient);
-display:flex;align-items:center;justify-content:center;
-font-size:3rem;
-box-shadow:0 0 100px rgba(109,106,255,.45);
-animation:pulse 3s infinite;
-}
-@keyframes pulse{
-50%{transform:scale(1.08)}
-}
-
-/* ===== FOOTER ===== */
-footer{
-padding:100px 24px 60px;
-background:#07070b;
-text-align:center;
-}
-footer p{color:var(--muted)}
-footer .logo{justify-content:center;margin-bottom:20px}
-
-/* ===== FADE IN ===== */
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:1s var(--ease);
-}
-.fade.show{
-opacity:1;
-transform:none;
-}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VAY MESSAGE</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div id="loader">
-<div class="loader-logo"><i class="fa-solid fa-comment-dots"></i></div>
-<p style="margin-top:24px;color:var(--muted)">Загрузка Vaymessage…</p>
-</div>
-
 <header>
-<nav>
-<div class="logo">
-<div class="logo-icon"><i class="fa-solid fa-comment-dots"></i></div>
-Vaymessage
-</div>
-<div>
-<a href="#features">Возможности</a>
-<a href="#security" style="margin-left:24px">Безопасность</a>
-<a href="#ecosystem" style="margin-left:24px">Экосистема</a>
-</div>
-</nav>
+  <nav>
+    <b>VAY MESSAGE</b>
+    <div>
+      <a href="#about">О нас</a>
+      <a href="#updates">Обновления</a>
+      <a href="#beta">BETA</a>
+      <a href="admin.html">Админ</a>
+    </div>
+  </nav>
 </header>
 
-<section class="hero">
-<div>
-<h1 class="fade">Будущее общения</h1>
-<p class="fade">Vaymessage — это коммуникационная ОС с AI, защитой и интерфейсом нового поколения</p>
-<button class="fade">Следить за запуском</button>
-</div>
+<section class="hero reveal">
+  <h1>Мессенджер нового поколения</h1>
+  <p>Безопасность • Плавность • Экосистема VAY</p>
+  <button>Скачать</button>
 </section>
 
-<section id="features">
-<div class="container">
-<h2 class="section-title fade">Возможности</h2>
-<p class="section-desc fade">Интеллект, скорость и приватность в каждом сообщении</p>
-
-<div class="grid">
-<div class="card fade">
-<i class="fa-solid fa-brain"></i>
-<h3>AI в чатах</h3>
-<p>Подсказки, расшифровка, автоматизация</p>
-</div>
-
-<div class="card fade">
-<i class="fa-solid fa-lock"></i>
-<h3>Zero-Trust Security</h3>
-<p>Сквозное шифрование и защита сессий</p>
-</div>
-
-<div class="card fade">
-<i class="fa-solid fa-wand-magic-sparkles"></i>
-<h3>Glass UI</h3>
-<p>Liquid-дизайн, адаптация под любое устройство</p>
-</div>
-</div>
-</div>
+<section id="about" class="glass reveal">
+  <h2>О компании VAY</h2>
+  <p>
+    VAY — технологическая платформа нового поколения.
+    Мы создаём мессенджер, идентификацию (VAY ID),
+    облако и будущую операционную среду VAY OS.
+  </p>
 </section>
 
-<section id="security">
-<div class="container">
-<h2 class="section-title fade">Безопасность</h2>
-<div class="security-visual fade">
-<i class="fa-solid fa-shield-halved"></i>
-</div>
-</div>
+<section id="updates" class="reveal">
+  <h2>Обновления</h2>
+  <div id="updatesList"></div>
 </section>
 
-<section id="ecosystem">
-<div class="container">
-<h2 class="section-title fade">Экосистема</h2>
-<div class="grid">
-<div class="card fade"><h3>Vay Cloud</h3></div>
-<div class="card fade"><h3>Vay Office</h3></div>
-<div class="card fade"><h3>Vay Music</h3></div>
-</div>
-</div>
+<section id="beta" class="glass reveal">
+  <h2>BETA-доступ</h2>
+  <p>
+    Бета-версия может содержать ошибки.  
+    Для восстановления требуется ПК.
+  </p>
+  <label>
+    <input type="checkbox"> Я согласен со всеми условиями
+  </label>
+  <br><br>
+  <button>Подать заявку</button>
 </section>
 
-<footer>
-<div class="logo">
-<div class="logo-icon"><i class="fa-solid fa-comment-dots"></i></div>
-Vaymessage
-</div>
-<p>© 2024–2026 Vaymessage Digital Ecosystem</p>
-</footer>
-
-<script>
-setTimeout(()=>document.getElementById('loader').classList.add('hide'),1600);
-
-const obs=new IntersectionObserver(e=>{
-e.forEach(i=>i.isIntersecting&&i.target.classList.add('show'))
-},{threshold:.15});
-
-document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
