@@ -1,10 +1,120 @@
-<h2>BETA VAYMESSAGE</h2>
-<ul>
-<li>Приложение может работать нестабильно</li>
-<li>Для восстановления требуется ПК</li>
-<li>Возможна потеря данных</li>
-</ul>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAY MESSAGE BETA</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<label>
-<input type="checkbox"> Я согласен со всеми условиями
-</label>
+<header>
+  <nav>
+    <b>VAY MESSAGE</b>
+    <div>
+      <a href="index.html">Главная</a>
+      <a href="updates.html">Обновления</a>
+      <a href="beta.html">BETA</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero reveal">
+  <h1>BETA-доступ</h1>
+  <p>Ранний доступ к будущему VAY MESSAGE</p>
+</section>
+
+<section class="glass reveal">
+  <h2>Что такое BETA</h2>
+  <p>
+    BETA-версия — это предварительная версия мессенджера.
+    В ней могут присутствовать ошибки, нестабильная работа
+    и изменения без предупреждения.
+  </p>
+</section>
+
+<section class="glass reveal">
+  <h2>Важно знать перед участием</h2>
+  <ul>
+    <li>⚠ Возможны сбои и вылеты приложения</li>
+    <li>💻 Для восстановления может понадобиться ПК</li>
+    <li>🔄 Возможен откат на предыдущую версию</li>
+    <li>🔐 Пароль тестировщика может меняться</li>
+  </ul>
+</section>
+
+<section class="glass reveal">
+  <h2>Согласие</h2>
+
+  <label class="checkbox">
+    <input type="checkbox" id="agree">
+    Я понимаю риски и согласен со всеми условиями BETA-тестирования
+  </label>
+
+  <br><br>
+
+  <button id="applyBtn" disabled>
+    Подать заявку на BETA
+  </button>
+
+  <p id="status" class="muted"></p>
+</section>
+
+<section class="glass reveal">
+  <h2>Как проходит тестирование</h2>
+  <ol>
+    <li>Вы подаёте заявку</li>
+    <li>Получаете статус BETA-тестера</li>
+    <li>Получаете уведомления через VAY Notification</li>
+    <li>Помогаете улучшать продукт</li>
+  </ol>
+</section>
+
+<section class="glass reveal">
+  <h2>FAQ для тестировщиков</h2>
+
+  <details>
+    <summary>Что делать, если приложение не запускается?</summary>
+    <p>Запустится режим восстановления или откат версии.</p>
+  </details>
+
+  <details>
+    <summary>Могу ли я выйти из BETA?</summary>
+    <p>Да, в любой момент через настройки.</p>
+  </details>
+
+  <details>
+    <summary>Зачем нужен ПК?</summary>
+    <p>Для восстановления данных в экстренных случаях.</p>
+  </details>
+
+  <br>
+  <button onclick="shortFAQ()">Кратко для зумеров</button>
+</section>
+
+<script src="app.js"></script>
+<script>
+const agree = document.getElementById("agree");
+const btn = document.getElementById("applyBtn");
+const status = document.getElementById("status");
+
+agree.addEventListener("change", () => {
+  btn.disabled = !agree.checked;
+});
+
+btn.addEventListener("click", () => {
+  status.textContent = "Заявка отправлена. Ожидайте приглашение.";
+});
+
+function shortFAQ() {
+  alert(
+    "BETA = ранний доступ.\n" +
+    "Могут быть баги.\n" +
+    "Нужен ПК на всякий случай.\n" +
+    "Можно выйти в любой момент."
+  );
+}
+</script>
+
+</body>
+</html>
