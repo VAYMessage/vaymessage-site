@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Обновления VAY MESSAGE</title>
+<title>Обновления VAY</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,23 +29,20 @@
 <script src="app.js"></script>
 <script>
 fetch("updates.json")
-  .then(res => res.json())
-  .then(data => {
-    const box = document.getElementById("updates");
-
-    data.reverse().forEach(update => {
-      const div = document.createElement("div");
-      div.className = "glass reveal update-card";
-
-      div.innerHTML = `
-        <h2>${update.version}</h2>
-        <small>${update.date}</small>
-        <p>${update.text}</p>
-      `;
-
-      box.appendChild(div);
-    });
+.then(r => r.json())
+.then(data => {
+  const box = document.getElementById("updates");
+  data.reverse().forEach(u => {
+    const div = document.createElement("div");
+    div.className = "glass reveal update-card";
+    div.innerHTML = `
+      <h2>${u.version}</h2>
+      <small>${u.date}</small>
+      <p>${u.text}</p>
+    `;
+    box.appendChild(div);
   });
+});
 </script>
 
 </body>
