@@ -3,71 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VAY ADMIN</title>
+<title>Админка VAY</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <section class="hero reveal">
-  <h1>VAY ADMIN PANEL</h1>
+  <h1>Админ-панель</h1>
   <p>Управление VAY MESSAGE</p>
 </section>
 
-<section class="glass reveal" id="loginBox">
-  <h2>Вход администратора</h2>
+<section class="glass reveal">
+  <h2>Действия</h2>
+  <ul>
+    <li>📦 Загрузка файлов</li>
+    <li>📰 Публикация обновлений</li>
+    <li>🧪 Управление BETA</li>
+  </ul>
 
-  <input type="password" id="adminPass" placeholder="Пароль администратора">
-  <br><br>
-  <button onclick="login()">Войти</button>
-
-  <p id="loginStatus" class="muted"></p>
-</section>
-
-<section class="glass reveal hidden" id="adminPanel">
-
-  <h2>Панель управления</h2>
-
-  <div class="admin-block">
-    <h3>📢 Новое обновление</h3>
-    <input id="ver" placeholder="Версия (например 1.2.0)">
-    <textarea id="desc" placeholder="Описание обновления"></textarea>
-    <button onclick="addUpdate()">Добавить</button>
-  </div>
-
-  <div class="admin-block">
-    <h3>🧪 BETA</h3>
-    <button onclick="notifyBeta()">Уведомить тестеров</button>
-  </div>
-
-  <div class="admin-block">
-    <h3>📦 Файлы</h3>
-    <p>Загрузка файлов происходит через GitHub (Add file)</p>
-  </div>
-
+  <button onclick="logout()">Выйти</button>
 </section>
 
 <script>
-const PASSWORD = "vay-admin"; // потом уберём в сервер
-
-function login() {
-  const pass = document.getElementById("adminPass").value;
-  if (pass === PASSWORD) {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("adminPanel").classList.remove("hidden");
-  } else {
-    document.getElementById("loginStatus").textContent = "Неверный пароль";
-  }
+if (localStorage.getItem("vay_role") !== "admin") {
+  location.href = "vay-id.html";
 }
 
-function addUpdate() {
-  alert(
-    "Обновление добавлено.\n\n" +
-    "На GitHub Pages обновления редактируются вручную через updates.json"
-  );
-}
-
-function notifyBeta() {
-  alert("Уведомление BETA-тестерам отправлено через VAY Notification");
+function logout() {
+  localStorage.removeItem("vay_role");
+  location.href = "index.html";
 }
 </script>
 
