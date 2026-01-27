@@ -56,3 +56,22 @@ button {
   border: none;
   cursor: pointer;
 }
+.notify-list {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.notify-card {
+  margin-bottom: 16px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.notify-card.new {
+  border-left: 4px solid #4da3ff;
+}
+
+.notify-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
