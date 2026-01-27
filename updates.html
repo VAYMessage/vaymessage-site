@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Обновления VAY MESSAGE</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav>
+    <b>VAY MESSAGE</b>
+    <div>
+      <a href="index.html">Главная</a>
+      <a href="updates.html">Обновления</a>
+      <a href="beta.html">BETA</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero reveal">
+  <h1>Обновления</h1>
+  <p>История развития VAY MESSAGE</p>
+</section>
+
+<section id="updates" class="updates-list"></section>
+
+<script src="app.js"></script>
+<script>
+fetch("updates.json")
+  .then(res => res.json())
+  .then(data => {
+    const box = document.getElementById("updates");
+
+    data.reverse().forEach(update => {
+      const div = document.createElement("div");
+      div.className = "glass reveal update-card";
+
+      div.innerHTML = `
+        <h2>${update.version}</h2>
+        <small>${update.date}</small>
+        <p>${update.text}</p>
+      `;
+
+      box.appendChild(div);
+    });
+  });
+</script>
+
+</body>
+</html>
