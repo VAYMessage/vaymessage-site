@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAY FAST ID</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="hero reveal">
+  <h1>VAY FAST ID</h1>
+  <p>Быстрый вход без пароля</p>
+</section>
+
+<section class="glass reveal">
+  <p>Введите код, показанный на вашем устройстве</p>
+  <input id="code" placeholder="Код FAST ID">
+  <br><br>
+  <button onclick="checkCode()">Подтвердить вход</button>
+</section>
+
+<script>
+function checkCode() {
+  const code = document.getElementById("code").value;
+  const saved = localStorage.getItem("fast_code");
+
+  if (code === saved) {
+    localStorage.setItem("vay_role", "admin");
+    localStorage.removeItem("fast_code");
+    alert("Вход подтверждён через VAY FAST ID");
+    location.href = "admin.html";
+  } else {
+    alert("Неверный или устаревший код");
+  }
+}
+</script>
+
+</body>
+</html>
