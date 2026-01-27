@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Безопасность — VAY ID</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav>
+    <b>VAY ID • Security</b>
+    <div>
+      <a href="index.html">Главная</a>
+      <a href="admin.html">Админка</a>
+      <a href="fast-id.html">FAST ID</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero reveal">
+  <h1>Центр безопасности</h1>
+  <p>Управление входами, устройствами и защитой аккаунта</p>
+</section>
+
+<section class="glass reveal">
+  <h2>🔐 Статус аккаунта</h2>
+  <ul class="sec-list">
+    <li>✔ FAST ID: <b>Включён</b></li>
+    <li>✔ Push подтверждения: <b>Активны</b></li>
+    <li>✔ Шифрование: <b>Включено</b></li>
+    <li>⚠ Последняя активность: <b>Сегодня</b></li>
+  </ul>
+</section>
+
+<section class="glass reveal">
+  <h2>📱 Устройства</h2>
+
+  <div class="device">
+    <span>📱 Android • TECNO</span>
+    <small>Активно сейчас</small>
+    <button onclick="alert('Это текущее устройство')">Текущее</button>
+  </div>
+
+  <div class="device">
+    <span>💻 Windows • Chrome</span>
+    <small>Вход 2 часа назад</small>
+    <button onclick="logoutDevice()">Выйти</button>
+  </div>
+</section>
+
+<section class="glass reveal">
+  <h2>⚠ Защитные действия</h2>
+
+  <button onclick="panic()">Экстренно выйти со всех устройств</button>
+  <br><br>
+  <button onclick="resetFast()">Сбросить FAST ID</button>
+</section>
+
+<footer>
+  © VAY • Secure Ecosystem
+</footer>
+
+<script>
+function logoutDevice() {
+  alert("Устройство отключено 🚪");
+}
+
+function panic() {
+  if (confirm("Выйти со всех устройств?")) {
+    alert("Все сессии завершены 🔒");
+  }
+}
+
+function resetFast() {
+  if (confirm("Сбросить FAST ID?")) {
+    alert("FAST ID сброшен ⚡");
+  }
+}
+</script>
+
+<style>
+/* ===== SECURITY UI ===== */
+.sec-list {
+  list-style: none;
+  margin-top: 12px;
+}
+
+.sec-list li {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.device {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.device span {
+  font-weight: 500;
+}
+
+.device small {
+  opacity: .6;
+  margin-left: 12px;
+  flex: 1;
+}
+
+.device button {
+  font-size: 13px;
+  padding: 8px 12px;
+}
+</style>
+
+</body>
+</html>
