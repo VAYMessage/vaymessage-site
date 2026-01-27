@@ -1,20 +1,20 @@
-// Reveal animations
-const obs = new IntersectionObserver(e=>{
-  e.forEach(x=>x.isIntersecting && x.target.classList.add("show"))
-},{threshold:0.15});
+const reveals = document.querySelectorAll(".reveal");
 
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
-
-// Load updates
-fetch("updates.json")
-  .then(r=>r.json())
-  .then(data=>{
-    const box=document.getElementById("updatesList");
-    data.updates.forEach(u=>{
-      box.innerHTML+=`
-        <div class="glass reveal">
-          <b>${u.version}</b> • <span>${u.date}</span>
-          <p>${u.text}</p>
-        </div>`;
-    });
+function reveal() {
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight - 80) {
+      el.style.opacity = 1;
+      el.style.transform = "translateY(0)";
+    }
   });
+}
+
+reveals.forEach(el => {
+  el.style.opacity = 0;
+  el.style.transform = "translateY(40px)";
+  el.style.transition = "all .8s ease";
+});
+
+window.addEventListener("scroll", reveal);
+reveal();
