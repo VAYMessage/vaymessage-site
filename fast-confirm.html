@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Подтверждение входа</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="hero reveal">
+  <h1>Подтвердить вход</h1>
+  <p>Новый вход в аккаунт VAY</p>
+</section>
+
+<section class="glass reveal">
+  <p>Если это вы — подтвердите вход</p>
+  <button onclick="approve()">✔ Подтвердить</button>
+</section>
+
+<script>
+function approve() {
+  const code = Math.floor(100000 + Math.random() * 900000);
+  localStorage.setItem("fast_code", code);
+
+  alert("Ваш FAST ID код: " + code);
+}
+</script>
+
+</body>
+</html>
