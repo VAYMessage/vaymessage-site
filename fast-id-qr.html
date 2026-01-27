@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAY FAST ID — QR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav>
+    <b>VAY FAST ID</b>
+    <div>
+      <a href="index.html">Главная</a>
+      <a href="fast-id.html">Код</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero reveal">
+  <h1>Вход по QR-коду</h1>
+  <p>Отсканируйте QR в приложении VAY MESSAGE</p>
+</section>
+
+<section class="glass qr-box reveal">
+  <div class="qr-glass">
+    <div class="qr-frame">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=VAY_FAST_ID_DEMO"
+           alt="VAY FAST ID QR">
+    </div>
+  </div>
+
+  <p class="qr-text">
+    Откройте <b>VAY MESSAGE</b><br>
+    → Настройки → VAY FAST ID → Сканировать
+  </p>
+
+  <div class="qr-status" id="status">
+    Ожидание подтверждения…
+  </div>
+
+  <div class="qr-loader"></div>
+
+  <button onclick="confirm()">Я подтвердил вход</button>
+</section>
+
+<footer>
+  © VAY • Fast & Secure Login
+</footer>
+
+<script>
+function confirm() {
+  const status = document.getElementById("status");
+  status.innerText = "Вход подтверждён ✓";
+  status.style.color = "#7CFFB2";
+
+  document.querySelector(".qr-loader").style.display = "none";
+
+  setTimeout(() => {
+    location.href = "admin.html";
+  }, 1200);
+}
+</script>
+
+<style>
+/* ===== QR FAST ID DESIGN ===== */
+.qr-box {
+  text-align: center;
+}
+
+.qr-glass {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.qr-frame {
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.25),
+    rgba(255,255,255,.05)
+  );
+  backdrop-filter: blur(28px);
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.qr-frame img {
+  border-radius: 16px;
+  background: #fff;
+  padding: 8px;
+}
+
+.qr-text {
+  margin-top: 14px;
+  font-size: 15px;
+  opacity: .85;
+}
+
+.qr-status {
+  margin-top: 18px;
+  font-size: 16px;
+  opacity: .8;
+}
+
+.qr-loader {
+  width: 44px;
+  height: 44px;
+  margin: 18px auto;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: #4da3ff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+
+</body>
+</html>
