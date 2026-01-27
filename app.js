@@ -18,3 +18,8 @@ reveals.forEach(el => {
 
 window.addEventListener("scroll", reveal);
 reveal();
+const role = localStorage.getItem("vay_role");
+
+if (role === "admin") {
+  console.log("VAY ADMIN MODE");
+}
