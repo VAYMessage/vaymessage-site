@@ -2,136 +2,89 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Админка — VAY MESSAGE</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAY ID — Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  font-family:Inter;
+  background:linear-gradient(135deg,#0a0a0a,#111);
+  color:white;
+}
+
+.panel {
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.box {
+  width:380px;
+  padding:32px;
+  border-radius:24px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.2);
+  text-align:center;
+}
+
+h1 {
+  margin-bottom:12px;
+}
+
+button {
+  margin-top:20px;
+  padding:14px 22px;
+  width:100%;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#5E5CE6,#0A84FF);
+  color:white;
+  cursor:pointer;
+}
+
+.small {
+  margin-top:16px;
+  opacity:.6;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  <nav>
-    <b>VAY MESSAGE • ADMIN</b>
-    <div>
-      <a href="index.html">Сайт</a>
-      <a href="notifications.html">Уведомления</a>
-      <a href="#" onclick="logout()">Выйти</a>
-    </div>
-  </nav>
-</header>
+<div class="panel">
+  <div class="box">
+    <h1>VAY ID</h1>
+    <p id="user"></p>
 
-<section class="hero reveal">
-  <h1>Админ-панель</h1>
-  <p>Управление обновлениями и уведомлениями</p>
-</section>
+    <button onclick="push()">Отправить уведомление</button>
+    <button onclick="logout()">Выйти</button>
 
-<!-- 🔐 ПРОВЕРКА ВХОДА -->
-<script>
-if (localStorage.getItem("vay_admin") !== "true") {
-  location.href = "login.html";
-}
-</script>
-
-<!-- 📢 УВЕДОМЛЕНИЯ -->
-<section class="glass reveal">
-  <h2>📢 Отправить уведомление</h2>
-
-  <input id="nTitle" placeholder="Заголовок">
-  <br><br>
-  <textarea id="nText" placeholder="Текст уведомления"></textarea>
-  <br><br>
-
-  <button onclick="sendNotify()">Отправить в ЛК</button>
-  <button onclick="pushTest()">Push уведомление</button>
-</section>
-
-<!-- 📰 ОБНОВЛЕНИЯ -->
-<section class="glass reveal">
-  <h2>📰 Обновления (updates.json)</h2>
-
-  <input id="uVersion" placeholder="Версия (например v1.2)">
-  <br><br>
-  <input id="uDate" placeholder="Дата">
-  <br><br>
-  <textarea id="uText" placeholder="Описание обновления"></textarea>
-  <br><br>
-
-  <button onclick="addUpdate()">Добавить (локально)</button>
-</section>
-
-<!-- ⚙️ PUSH -->
-<section class="glass reveal">
-  <h2>🔔 Push система</h2>
-  <button onclick="enablePush()">Включить push</button>
-</section>
+    <div class="small">Admin Panel • Beta</div>
+  </div>
+</div>
 
 <script>
-/* 🚪 ВЫХОД */
+const user = localStorage.getItem("vay_id");
+if (!user) location.href="index.html";
+
+document.getElementById("user").innerText =
+  "Вы вошли как: " + user;
+
 function logout() {
-  localStorage.removeItem("vay_admin");
-  location.href = "index.html";
+  localStorage.removeItem("vay_id");
+  location.href="index.html";
 }
 
-/* 📢 ЛОКАЛЬНЫЕ УВЕДОМЛЕНИЯ */
-function sendNotify() {
-  let list = JSON.parse(localStorage.getItem("vay_notifications")) || [];
-
-  list.push({
-    title: document.getElementById("nTitle").value,
-    text: document.getElementById("nText").value,
-    time: new Date().toLocaleString(),
-    read: false
-  });
-
-  localStorage.setItem("vay_notifications", JSON.stringify(list));
-  alert("Уведомление отправлено ✅");
-}
-
-/* 🔔 PUSH (SERVICE WORKER) */
-async function enablePush() {
-  if (!("serviceWorker" in navigator)) {
-    alert("Push не поддерживается");
-    return;
-  }
-
-  await navigator.serviceWorker.register("/sw.js");
-  const perm = await Notification.requestPermission();
-
-  if (perm === "granted") {
-    alert("Push включён 🔔");
-  } else {
-    alert("Разрешение не получено");
-  }
-}
-
-/* 🧪 ТЕСТ PUSH */
-function pushTest() {
-  navigator.serviceWorker.ready.then(reg => {
-    reg.showNotification("VAY MESSAGE", {
-      body: "Тестовое push от администратора 🔔",
-      icon: "icon.png",
-      badge: "badge.png"
-    });
-  });
-}
-
-/* 📰 ОБНОВЛЕНИЯ (DEMO) */
-function addUpdate() {
-  alert(
-    "⚠️ GitHub Pages не позволяет менять JSON.\n\n" +
-    "На сервере OVH это будет работать автоматически."
-  );
+function push() {
+  alert("Уведомление отправлено (заглушка)");
 }
 </script>
 
-</body>
-</html>
-...
-<script src="main.js"></script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js");
-}
-</script>
 </body>
 </html>
