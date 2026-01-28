@@ -1,227 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaymessage — официальный сайт</title>
+  <meta charset="UTF-8" />
+  <title>VAY Messenger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-<style>
-:root {
-  --glass: rgba(255,255,255,.12);
-  --border: rgba(255,255,255,.2);
-  --blur: blur(20px);
-  --grad: linear-gradient(135deg,#5E5CE6,#0A84FF);
-  --bg: #0a0a0a;
-  --text: #fff;
-  --sub: rgba(255,255,255,.7);
-}
-
-* { box-sizing: border-box; margin:0; padding:0 }
-
-body {
-  font-family: Inter, system-ui;
-  background: radial-gradient(circle at top,#111,#000);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* HEADER */
-header {
-  position: fixed;
-  top:0; left:0;
-  width:100%;
-  backdrop-filter: var(--blur);
-  background: rgba(0,0,0,.5);
-  border-bottom: 1px solid var(--border);
-  z-index:100;
-}
-
-.nav {
-  max-width:1200px;
-  margin:auto;
-  padding:16px 24px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo {
-  font-weight:800;
-  font-size:22px;
-  background:var(--grad);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.nav button {
-  padding:10px 18px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter:var(--blur);
-  color:white;
-  cursor:pointer;
-}
-
-/* HERO */
-.hero {
-  padding:160px 24px 120px;
-  text-align:center;
-}
-
-.hero h1 {
-  font-size:56px;
-  font-weight:800;
-  background:var(--grad);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.hero p {
-  margin-top:24px;
-  font-size:20px;
-  color:var(--sub);
-  max-width:700px;
-  margin-inline:auto;
-}
-
-.hero .cta {
-  margin-top:40px;
-  display:flex;
-  justify-content:center;
-  gap:16px;
-}
-
-.cta button {
-  padding:16px 28px;
-  border-radius:999px;
-  font-size:16px;
-  border:none;
-  cursor:pointer;
-}
-
-.primary {
-  background:var(--grad);
-  color:white;
-}
-
-.glass {
-  background:var(--glass);
-  backdrop-filter:var(--blur);
-  border:1px solid var(--border);
-  color:white;
-}
-
-/* SECTIONS */
-section {
-  padding:100px 24px;
-  max-width:1200px;
-  margin:auto;
-}
-
-h2 {
-  font-size:40px;
-  margin-bottom:20px;
-}
-
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
-  margin-top:40px;
-}
-
-.card {
-  padding:32px;
-  border-radius:24px;
-  background:var(--glass);
-  backdrop-filter:var(--blur);
-  border:1px solid var(--border);
-  transition:.4s;
-}
-
-.card:hover {
-  transform:translateY(-6px);
-}
-
-/* FOOTER */
-footer {
-  padding:80px 24px 40px;
-  text-align:center;
-  color:var(--sub);
-}
-
-/* ANIMATION */
-.fade {
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeUp 1s forwards;
-}
-
-@keyframes fadeUp {
-  to { opacity:1; transform:none }
-}
-</style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
 </head>
-
 <body>
 
-<header>
-  <div class="nav">
-    <div class="logo">Vaymessage</div>
-    <button onclick="login()">Админ вход</button>
-  </div>
+<header class="glass header">
+  <div class="logo">VAY</div>
+  <nav>
+    <a href="/updates.html">Обновления</a>
+    <a href="/beta.html">Бета</a>
+    <a href="/login.html" class="btn">Войти</a>
+  </nav>
 </header>
 
-<div class="hero fade">
-  <h1>Мессенджер будущего</h1>
-  <p>
-    Vaymessage — это безопасность, искусственный интеллект  
-    и дизайн нового поколения.
+<section class="hero">
+  <h1 class="reveal">Мессенджер нового поколения</h1>
+  <p class="reveal delay-1">
+    Быстро. Безопасно. Красиво.  
+    Создан для людей, а не алгоритмов.
   </p>
-
-  <div class="cta">
-    <button class="primary">Скачать бета</button>
-    <button class="glass">Обновления</button>
-  </div>
-</div>
-
-<section class="fade">
-  <h2>Почему Vaymessage</h2>
-  <div class="cards">
-    <div class="card">🔐 Сквозное шифрование</div>
-    <div class="card">🤖 AI-функции</div>
-    <div class="card">💎 Liquid Glass дизайн</div>
+  <div class="actions reveal delay-2">
+    <a href="/beta.html" class="btn primary">Попробовать бета</a>
+    <a href="#about" class="btn ghost">О продукте</a>
   </div>
 </section>
 
-<section class="fade">
-  <h2>Обновления</h2>
-  <div class="card">
-    Последняя версия: <b>Beta 0.1</b><br><br>
-    • FAST ID<br>
-    • Уведомления<br>
-    • Новая админка
+<section id="about" class="section glass reveal">
+  <h2>О компании</h2>
+  <p>
+    VAY — технологическая компания, создающая защищённые
+    коммуникации нового поколения с упором на дизайн,
+    скорость и приватность.
+  </p>
+</section>
+
+<section class="features">
+  <div class="card reveal">
+    <h3>🔐 Приватность</h3>
+    <p>End-to-End шифрование и контроль данных.</p>
+  </div>
+  <div class="card reveal delay-1">
+    <h3>⚡ Скорость</h3>
+    <p>Мгновенные сообщения и пуши.</p>
+  </div>
+  <div class="card reveal delay-2">
+    <h3>🎨 Дизайн</h3>
+    <p>Liquid Glass, blur, анимации как у Apple.</p>
   </div>
 </section>
 
-<footer>
-  © 2026 Vaymessage Digital Ecosystem
+<footer class="glass footer">
+  <p>© 2026 VAY Messenger</p>
 </footer>
 
-<script>
-function login() {
-  const name = prompt("Введите VAY ID");
-  if (!name) return;
-  localStorage.setItem("vay_id", name);
-  location.href = "admin.html";
-}
+<script src="/js/animations.js"></script>
 
-/* SERVICE WORKER */
+<script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+  navigator.serviceWorker.register("/sw.js");
 }
 </script>
 
