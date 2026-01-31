@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>VAY ID — Центр безопасности</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Inter, system-ui;
+  background: radial-gradient(1200px 600px at 50% -300px, #1a1a1a, #000);
+  color: #fff;
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.header p {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 20px;
+  transition: transform .25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.ok { color: #3ddc84; }
+.warn { color: #fbbc04; }
+
+.session {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 10px;
+}
+
+.btn {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.28);
+}
+
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>VAY ID</h1>
+    <p>Центр безопасности и управления аккаунтом</p>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>🔐 Безопасность</h3>
+      <p>Шифрование, защита от взлома, экран тревоги</p>
+      <div class="status ok">✔ Защита активна</div>
+      <button class="btn">Настроить</button>
+    </div>
+
+    <div class="card">
+      <h3>📱 Сеансы</h3>
+      <p>Все устройства, где выполнен вход</p>
+      <div class="session">
+        <span>Android • сейчас</span>
+        <span>🟢</span>
+      </div>
+      <div class="session">
+        <span>ПК • вчера</span>
+        <span>🟢</span>
+      </div>
+      <button class="btn">Управление</button>
+    </div>
+
+    <div class="card">
+      <h3>✔ Статус аккаунта</h3>
+      <p>Уровень доверия и галочки</p>
+      <div class="status ok">🛡 Защищённый профиль</div>
+      <button class="btn">Подробнее</button>
+    </div>
+
+    <div class="card">
+      <h3>🚨 Тревоги</h3>
+      <p>Попытки входа, подозрительная активность</p>
+      <div class="status warn">⚠ Нет событий</div>
+      <button class="btn">История</button>
+    </div>
+
+    <div class="card">
+      <h3>🔔 Уведомления</h3>
+      <p>Важные оповещения безопасности</p>
+      <div class="status ok">✔ Включены</div>
+      <button class="btn">Настроить</button>
+    </div>
+
+    <div class="card">
+      <h3>🧪 Бета-статус</h3>
+      <p>Вы участвуете в тестировании VAY</p>
+      <div class="status ok">✔ Бета активна</div>
+      <button class="btn">Что нового</button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    VAY ID • защищает вас даже когда вы не думаете о безопасности
+  </div>
+
+</div>
+
+</body>
+</html>
