@@ -1,0 +1,106 @@
+:root {
+  --glass: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.12);
+  --blur: blur(22px);
+  --accent: #5e8bff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, -apple-system;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND */
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(700px at 20% 30%, rgba(94,139,255,.25), transparent),
+    radial-gradient(900px at 80% 70%, rgba(120,255,200,.18), transparent);
+  transition: transform .2s ease;
+}
+
+/* GLASS */
+.glass {
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 30px;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: var(--blur);
+  background: rgba(0,0,0,.6);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 16px;
+  opacity: .85;
+}
+
+/* EMERGENCY BUTTON */
+#emergencyBtn {
+  margin-left: 16px;
+  background: rgba(255,80,80,.15);
+  border: 1px solid rgba(255,80,80,.4);
+  color: #ff6b6b;
+  padding: 8px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: .8s ease;
+}
+.reveal.active {
+  opacity: 1;
+  transform: none;
+}
+
+/* EMERGENCY MODE */
+body.emergency {
+  background: #000;
+}
+
+body.emergency .background {
+  display: none;
+}
+
+body.emergency .glass {
+  background: #111;
+  backdrop-filter: none;
+  border-radius: 8px;
+  border: none;
+}
+
+body.emergency nav {
+  background: #000;
+}
+
+body.emergency * {
+  animation: none !important;
+  transition: none !important;
+}
