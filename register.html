@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация — VAY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui;
+      background: radial-gradient(900px 500px at 50% -200px, #1a1a1a, #000);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 22px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      opacity: 0.75;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .alt {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.75;
+    }
+
+    .alt a {
+      color: #8ab4ff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box glass">
+    <h1>Добро пожаловать в VAY</h1>
+    <p>Введите номер телефона для регистрации</p>
+
+    <label>Номер телефона</label>
+    <input type="text" placeholder="+7 ___ ___ __ __">
+
+    <button onclick="nextStep()">Продолжить</button>
+
+    <div class="alt">
+      Уже есть аккаунт? <a href="login.html">Войти</a>
+    </div>
+  </div>
+
+<script>
+  function nextStep() {
+    alert(
+      "Бета-версия\n\nДалее будет:\n• SMS-код\n• создание VAY ID\n• настройки безопасности"
+    );
+  }
+</script>
+
+</body>
+</html>
