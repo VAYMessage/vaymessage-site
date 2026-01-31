@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VAY — мессенджер, который помогает</title>
+
+  <!-- Meta -->
+  <meta name="description" content="VAY — мессенджер, который помогает в сложных ситуациях. Безопасность, экстренный режим, связь даже без интернета.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont;
+      background: radial-gradient(1200px 600px at 50% -200px, #1a1a1a, #000);
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* GLASS */
+    .glass {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+    }
+
+    /* LAYOUT */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .logo {
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.4px;
+    }
+
+    header nav a {
+      margin-left: 18px;
+      opacity: 0.85;
+      transition: opacity .2s;
+    }
+
+    header nav a:hover {
+      opacity: 1;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.85;
+      max-width: 680px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 90px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-size: 34px;
+      margin-bottom: 18px;
+    }
+
+    section p {
+      opacity: 0.85;
+      max-width: 700px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .card {
+      padding: 24px;
+      transition: transform .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .card p {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      opacity: 0.6;
+      font-size: 13px;
+    }
+
+    /* FADE IN */
+    .fade {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="glass">
+  <div class="logo">VAY</div>
+  <nav>
+    <a href="updates.html">Обновления</a>
+    <a href="beta.html">Бета</a>
+    <a href="login.html" class="btn">Войти</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="fade">
+      <h1>Мессенджер, который помогает<br>в сложных ситуациях</h1>
+      <p>
+        VAY создан, чтобы оставаться рядом, когда это действительно важно:
+        при тревоге, слабом интернете, рисках и неопределённости.
+      </p>
+      <div class="hero-actions">
+        <a href="login.html" class="btn">Войти</a>
+        <a href="beta.html" class="btn">Бета-версия</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Поддержка в экстренных ситуациях</h2>
+    <p>
+      Экстремальный режим упрощает интерфейс и сохраняет связь даже при
+      слабом или отсутствующем интернете.
+    </p>
+
+    <div class="cards">
+      <div class="card glass">
+        <h3>Приоритет связи</h3>
+        <p>Сообщения доставляются первыми во время тревог и ЧС.</p>
+      </div>
+      <div class="card glass">
+        <h3>Без интернета</h3>
+        <p>Bluetooth, Wi-Fi Direct, P2P и передача через ПК.</p>
+      </div>
+      <div class="card glass">
+        <h3>Проверенная информация</h3>
+        <p>Официальные аккаунты и боты публикуют только подтверждённые данные.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Безопасность по умолчанию</h2>
+    <p>
+      VAY заранее защищает пользователя от угроз, мошенников и
+      несанкционированного доступа.
+    </p>
+
+    <div class="cards">
+      <div class="card glass">
+        <h3>AI-защита</h3>
+        <p>Выявление рисков и подозрительных контактов до проблем.</p>
+      </div>
+      <div class="card glass">
+        <h3>Шифрование</h3>
+        <p>Переписки защищены ещё до отправки на сервер.</p>
+      </div>
+      <div class="card glass">
+        <h3>Экран безопасности</h3>
+        <p>Размытие экрана и мгновенная блокировка при угрозах.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="fade">
+    <h2>Экосистема VAY</h2>
+    <p>
+      VAY — это не только мессенджер, а единая система сервисов.
+    </p>
+
+    <div class="cards">
+      <div class="card glass"><h3>VAY Cloud</h3><p>Безопасное хранение файлов.</p></div>
+      <div class="card glass"><h3>VAY Office</h3><p>Документы, таблицы, презентации.</p></div>
+      <div class="card glass"><h3>VAY Printer</h3><p>Умная беспроводная печать.</p></div>
+      <div class="card glass"><h3>VAY Music</h3><p>Музыка и подкасты.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 VAYDESIGNING · Бета-версия · Релиз 1 июля 2026
+</footer>
+
+<script>
+  // Fade-in animation
+  const items = document.querySelectorAll('.fade');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.15 });
+
+  items.forEach(i => observer.observe(i));
+</script>
+
+</body>
+</html>
