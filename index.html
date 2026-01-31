@@ -3,249 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAY — мессенджер, который рядом</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --glass: rgba(255,255,255,0.08);
-  --border: rgba(255,255,255,0.12);
-  --blur: blur(22px);
-  --accent: #5e8bff;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Inter, system-ui;
-}
-
-body {
-  background: radial-gradient(1200px 600px at 50% -200px, #1b1f3b, #000);
-  color: #fff;
-  overflow-x: hidden;
-}
-
-/* NAV */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: var(--blur);
-  background: rgba(0,0,0,0.6);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 18px;
-  font-size: 14px;
-  opacity: .85;
-}
-
-nav a:hover { opacity: 1; }
-
-/* SECTIONS */
-section {
-  max-width: 1100px;
-  margin: 80px auto;
-  padding: 0 20px;
-}
-
-.glass {
-  background: var(--glass);
-  backdrop-filter: var(--blur);
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  padding: 30px;
-}
-
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 120px 20px;
-}
-
-.hero h1 {
-  font-size: 48px;
-  font-weight: 800;
-}
-
-.hero p {
-  margin-top: 18px;
-  font-size: 18px;
-  opacity: .85;
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-  gap: 20px;
-}
-
-/* CARDS */
-.card h3 {
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 14px;
-  opacity: .75;
-}
-
-/* BUTTON */
-.btn {
-  margin-top: 14px;
-  display: inline-block;
-  padding: 12px 18px;
-  border-radius: 14px;
-  background: var(--accent);
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-/* FORMS */
-form input {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255,255,255,0.12);
-  color: #fff;
-}
-
-form button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  opacity: .6;
-  font-size: 13px;
-  margin: 80px 0 40px;
-}
-</style>
+<title>VAY</title>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
+<div class="background"></div>
 
 <nav>
   <strong>VAY</strong>
   <div>
-    <a href="#about">О нас</a>
-    <a href="#ai">AI</a>
-    <a href="#services">Сервисы</a>
-    <a href="#updates">Обновления</a>
-    <a href="#login">Вход</a>
+    <a href="index.html">Главная</a>
+    <a href="auth.html">Вход</a>
+    <button id="emergencyBtn">🆘</button>
   </div>
 </nav>
 
-<section class="hero">
-  <h1>VAY — мессенджер, который помогает</h1>
-  <p>Когда другие сервисы молчат, VAY остаётся рядом</p>
+<section class="glass reveal" style="margin:80px">
+  <h1>VAY — мессенджер, который рядом</h1>
+  <p>Безопасность, помощь и связь даже в сложных ситуациях.</p>
 </section>
 
-<section id="about" class="glass">
-  <h2>Почему VAY</h2>
-  <p>
-    VAY создан для сложных ситуаций.  
-    Экстренный режим, защита, AI-помощник и связь даже без интернета.
-  </p>
-</section>
-
-<section class="glass grid">
-  <div class="card">
-    <h3>🆘 Экстренный режим</h3>
-    <p>Минимальный интерфейс, приоритет сообщений, инструкции.</p>
-  </div>
-  <div class="card">
-    <h3>🔐 Безопасность</h3>
-    <p>Шифрование, защита от взлома, тревоги.</p>
-  </div>
-  <div class="card">
-    <h3>🌐 Без интернета</h3>
-    <p>Bluetooth, Wi-Fi Direct, P2P, ПК.</p>
-  </div>
-</section>
-
-<section id="ai" class="glass">
-  <h2>VAY AI</h2>
-  <p>
-    AI помогает, объясняет, предупреждает об опасностях  
-    и поддерживает в сложных ситуациях.
-  </p>
-</section>
-
-<section id="services" class="glass grid">
-  <div class="card"><h3>☁ VAY Cloud</h3><p>50 ГБ, сжатие, защита.</p></div>
-  <div class="card"><h3>📄 VAY Office</h3><p>Документы, таблицы.</p></div>
-  <div class="card"><h3>🎵 VAY Music</h3><p>Музыка и подкасты.</p></div>
-  <div class="card"><h3>🖨 VAY Printer</h3><p>Умная печать.</p></div>
-</section>
-
-<section id="updates" class="glass">
-  <h2>Бета и запуск</h2>
-  <p>Запуск VAY — <strong>1 июля 2026</strong></p>
-  <p id="countdown"></p>
-</section>
-
-<section id="login" class="glass grid">
-  <div>
-    <h3>Вход</h3>
-    <form>
-      <input placeholder="Номер телефона">
-      <input type="password" placeholder="Пароль">
-      <button>Войти</button>
-    </form>
-  </div>
-  <div>
-    <h3>Регистрация</h3>
-    <form>
-      <input placeholder="Номер телефона">
-      <button>Создать аккаунт</button>
-    </form>
-  </div>
-</section>
-
-<footer>
-  © VAYDESIGNING • Бета-версия • VAY ID • Без сторонних сервисов
-</footer>
-
-<script>
-const launch = new Date("2026-07-01").getTime();
-setInterval(() => {
-  const now = Date.now();
-  const diff = launch - now;
-  if (diff <= 0) {
-    document.getElementById("countdown").innerText = "VAY уже доступен";
-    return;
-  }
-  const d = Math.floor(diff / 86400000);
-  document.getElementById("countdown").innerText = `До запуска: ${d} дней`;
-}, 1000);
-
-// Service Worker
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js");
-}
-</script>
-
+<script src="js/animations.js"></script>
 </body>
 </html>
