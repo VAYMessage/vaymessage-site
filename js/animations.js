@@ -33,3 +33,12 @@ if (emergencyBtn) {
 if (localStorage.getItem('vay_emergency') === 'true') {
   document.body.classList.add('emergency');
 }
+// VAY AI
+const aiBtn = document.querySelector('.vay-ai-btn');
+const aiPanel = document.querySelector('.vay-ai-panel');
+
+if (aiBtn && aiPanel) {
+  aiBtn.onclick = () => {
+    aiPanel.classList.toggle('active');
+  };
+}
