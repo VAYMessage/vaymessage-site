@@ -104,3 +104,57 @@ body.emergency * {
   animation: none !important;
   transition: none !important;
 }
+/* VAY AI */
+.vay-ai-btn {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  font-size: 22px;
+}
+
+.vay-ai-panel {
+  position: fixed;
+  right: 22px;
+  bottom: 90px;
+  width: 320px;
+  max-height: 420px;
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.vay-ai-panel.active {
+  display: flex;
+}
+
+.vay-ai-header {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.vay-ai-body {
+  font-size: 14px;
+  opacity: .85;
+  line-height: 1.5;
+}
+
+/* emergency version */
+body.emergency .vay-ai-btn {
+  background: #ff4444;
+  border: none;
+}
+
+body.emergency .vay-ai-panel {
+  background: #111;
+}
