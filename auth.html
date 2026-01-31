@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAY ID — вход</title>
+<title>VAY ID</title>
 
 <link rel="stylesheet" href="css/styles.css">
 
@@ -84,27 +84,22 @@
   font-weight: 600;
   cursor: pointer;
 }
-
-.alt {
-  margin-top: 14px;
-  font-size: 13px;
-  opacity: .7;
-}
-
-.alt a {
-  color: #fff;
-  text-decoration: underline;
-  cursor: pointer;
-}
 </style>
 </head>
 
 <body>
 <div class="background"></div>
 
+<nav>
+  <strong>VAY</strong>
+  <div>
+    <a href="index.html">Главная</a>
+    <button id="emergencyBtn">🆘</button>
+  </div>
+</nav>
+
 <div class="auth-wrap">
   <div class="glass auth-card reveal">
-
     <h1>VAY ID</h1>
     <p>Единый вход в экосистему VAY</p>
 
@@ -113,32 +108,20 @@
       <button onclick="switchTab('register')">Регистрация</button>
     </div>
 
-    <!-- ВХОД -->
     <div id="login" class="auth-form active">
       <input placeholder="Номер телефона">
       <input type="password" placeholder="Пароль">
       <button>Войти</button>
-
-      <div class="alt">
-        или <a>войти по SMS</a>
-      </div>
     </div>
 
-    <!-- РЕГИСТРАЦИЯ -->
     <div id="register" class="auth-form">
       <input placeholder="Номер телефона">
       <button>Продолжить</button>
-
-      <div class="alt">
-        Это твой мессенджер. Мы рядом.
-      </div>
     </div>
-
   </div>
 </div>
 
 <script src="js/animations.js"></script>
-
 <script>
 function switchTab(tab) {
   document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
@@ -153,6 +136,5 @@ function switchTab(tab) {
   }
 }
 </script>
-
 </body>
 </html>
