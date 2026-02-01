@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAY</title>
+<title>VAY — мессенджер помощи</title>
+
 <link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
 </head>
 
 <body>
@@ -14,16 +17,35 @@
   <strong>VAY</strong>
   <div>
     <a href="index.html">Главная</a>
+    <a href="about.html">О проекте</a>
+    <a href="updates.html">Обновления</a>
     <a href="auth.html">Вход</a>
-    <button id="emergencyBtn">🆘</button>
+    <a href="emergency.html">🆘</a>
   </div>
 </nav>
 
-<section class="glass reveal" style="margin:80px">
-  <h1>VAY — мессенджер, который рядом</h1>
-  <p>Безопасность, помощь и связь даже в сложных ситуациях.</p>
-</section>
+<main>
+  <section class="reveal">
+    <h1>VAY — мессенджер, который остаётся рядом</h1>
+    <p>Поддержка, безопасность и связь даже в сложных ситуациях.</p>
+  </section>
+
+  <section class="glass reveal">
+    <h2>Почему VAY</h2>
+    <ul>
+      <li>Связь без интернета</li>
+      <li>Экстренный режим</li>
+      <li>Защита пользователя</li>
+      <li>AI-помощь</li>
+    </ul>
+  </section>
+</main>
 
 <script src="js/animations.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js");
+}
+</script>
 </body>
 </html>
