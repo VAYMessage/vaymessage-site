@@ -1,0 +1,17 @@
+{
+  "name": "VAY Messenger",
+  "short_name": "VAY",
+  "description": "VAY — мессенджер, который остаётся рядом",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
