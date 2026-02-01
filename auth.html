@@ -6,135 +6,20 @@
 <title>VAY ID</title>
 
 <link rel="stylesheet" href="css/styles.css">
-
-<style>
-.auth-wrap {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.auth-card {
-  width: 100%;
-  max-width: 420px;
-  padding: 36px;
-  text-align: center;
-}
-
-.auth-card h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.auth-card p {
-  font-size: 14px;
-  opacity: .7;
-  margin-bottom: 26px;
-}
-
-.tabs {
-  display: flex;
-  background: rgba(255,255,255,.08);
-  border-radius: 14px;
-  margin-bottom: 26px;
-}
-
-.tabs button {
-  flex: 1;
-  padding: 12px;
-  background: none;
-  border: none;
-  color: #fff;
-  opacity: .6;
-  cursor: pointer;
-}
-
-.tabs button.active {
-  opacity: 1;
-  background: rgba(255,255,255,.12);
-  border-radius: 14px;
-}
-
-.auth-form {
-  display: none;
-}
-
-.auth-form.active {
-  display: block;
-}
-
-.auth-form input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 14px;
-  border-radius: 14px;
-  border: none;
-  background: rgba(255,255,255,.12);
-  color: #fff;
-}
-
-.auth-form button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 16px;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-</style>
 </head>
 
 <body>
 <div class="background"></div>
 
-<nav>
-  <strong>VAY</strong>
-  <div>
-    <a href="index.html">Главная</a>
-    <button id="emergencyBtn">🆘</button>
-  </div>
-</nav>
-
-<div class="auth-wrap">
-  <div class="glass auth-card reveal">
+<main>
+  <section class="glass">
     <h1>VAY ID</h1>
-    <p>Единый вход в экосистему VAY</p>
-
-    <div class="tabs">
-      <button class="active" onclick="switchTab('login')">Вход</button>
-      <button onclick="switchTab('register')">Регистрация</button>
-    </div>
-
-    <div id="login" class="auth-form active">
-      <input placeholder="Номер телефона">
-      <input type="password" placeholder="Пароль">
-      <button>Войти</button>
-    </div>
-
-    <div id="register" class="auth-form">
-      <input placeholder="Номер телефона">
-      <button>Продолжить</button>
-    </div>
-  </div>
-</div>
+    <p>Регистрация и вход по номеру телефона</p>
+    <input placeholder="Номер телефона">
+    <button>Продолжить</button>
+  </section>
+</main>
 
 <script src="js/animations.js"></script>
-<script>
-function switchTab(tab) {
-  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-
-  if (tab === 'login') {
-    document.querySelectorAll('.tabs button')[0].classList.add('active');
-    document.getElementById('login').classList.add('active');
-  } else {
-    document.querySelectorAll('.tabs button')[1].classList.add('active');
-    document.getElementById('register').classList.add('active');
-  }
-}
-</script>
 </body>
 </html>
